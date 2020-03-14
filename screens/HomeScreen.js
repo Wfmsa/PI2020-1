@@ -24,7 +24,7 @@ export default function HomeScreen() {
           <DevelopmentModeNotice />
 
           <Text style={styles.getStartedText}>
-            Bem vindo ao app que irá lhe mostrar a localização do transporte escolar!
+            Bem-vindo(a) ao app que irá lhe mostrar a localização do transporte escolar!
           </Text>
         </View>
       </ScrollView>

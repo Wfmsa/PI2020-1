@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import TabBarIcon from '../TabBarIcon';
+import HomeScreen from '../../screens/HomeScreen';
+import LinksScreen from '../../screens/MapScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -24,7 +24,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
+        name="Mapa"
         component={LinksScreen}
         options={{
           title: 'Resources',
@@ -41,7 +41,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Onde está o transporte escolar?';
-    case 'Links':
-      return 'Links to learn more';
+    case 'Mapa':
+      return 'Mapa';
   }
 }

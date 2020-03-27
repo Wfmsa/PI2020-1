@@ -2,8 +2,7 @@ import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import NavigatorTab from '../components/Tabs/NavigatorTab';
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -26,8 +25,10 @@ export default function HomeScreen({ navigation }) {
           title={'Exemplo de navegação!'}
           type={'outline'}
           buttonStyle={styles.btnNavegar}
-          onPress={() => navigation.navigate('Mapa')}
+          onPress={() => navigation.navigate('Map')}
         />
+
+        <NavigatorTab rightBtn={() => navigation.navigate('Map')}/>
       </ScrollView>
     </View>
   );
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
     height: '100%',
-    justifyContent: 'space-around'
+    justifyContent: 'space-between'
   },
   btnNavegar: {
     margin: 40
@@ -62,40 +63,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
   getStartedText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
   },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+  
 });

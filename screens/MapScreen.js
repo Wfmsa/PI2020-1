@@ -1,8 +1,9 @@
 import * as React from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import NavigatorTab from '../components/Tabs/NavigatorTab';
 
-export default function MapScreen() {
+export default function MapScreen({ navigation }) {
 
   const region = navigator.geolocation.getCurrentPosition(
     ({ coords: {latitude, longitude} }) => {
@@ -23,6 +24,8 @@ export default function MapScreen() {
         showsUserLocation
         loadingEnabled  
       />
+
+      <NavigatorTab leftBtn={() => navigation.navigate('Home')}/>
     </View>
   );
 }
@@ -36,6 +39,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: '90%',
   },
 });

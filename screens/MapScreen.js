@@ -12,8 +12,9 @@ export default class MapScreen extends React.Component {
 
   //Função para pegar a posição atual da pessoa e definir no State.
   async componentDidMount() {
-      ({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
+      
     navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
       (error) => console.log('Error:', error)
     )
 

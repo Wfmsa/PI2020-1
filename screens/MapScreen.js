@@ -32,7 +32,7 @@ export default class MapScreen extends React.Component {
               latitude,
               longitude,
               latitudeDelta: 0.0143,
-              longitudeDelta: 0.0134,
+              longitudeDelta: 0.0134,              
             }}
             showsUserLocation
             rotateEnabled={false}

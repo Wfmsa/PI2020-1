@@ -10,27 +10,36 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
           <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/van.png')}
-              style={styles.welcomeImage}
-            />
+            <Text style={{ fontSize: 40 }}>Bem-Vindo</Text>
+            <Text style={{ fontSize: 18 }}>escolha o tipo da conta</Text>
           </View>
-  
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>
-              Bem-vindo(a) ao app que irá lhe mostrar a localização do transporte escolar!
-            </Text>
+
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={styles.iconM}
+              activeOpacity={0.5}
+              onPress={() => this.props.navigation.navigate('LoginM')}>
+              <Image
+                source={require('../assets/images/volante.png')}
+                style={styles.welcomeImage}
+              />
+              <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Motorista</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.iconP}
+              activeOpacity={0.5}
+              onPress={() => this.props.navigation.navigate('LoginP')}>
+              <Image
+                source={require('../assets/images/passageiro.png')}
+                style={styles.welcomeImage}
+              />
+              <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Passageiro</Text>
+            </TouchableOpacity>
           </View>
-  
-          <Button 
-            title={'Exemplo de navegação!'}
-            type={'outline'}
-            buttonStyle={styles.btnNavegar}
-            onPress={() => this.props.navigation.navigate('Map')}
-          />
-  
-          <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')}/>
+          <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
         </ScrollView>
       </View>
     );
@@ -52,25 +61,24 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: '10%',
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 120,
+    height: 100,
     resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+  }, 
+  iconM: {
+    paddingTop: 20,
+    marginBottom: '45%',
+    marginLeft: '12%'
   },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  
+
+  iconP: {
+    paddingTop: 20,
+    marginBottom: '45%',
+    marginLeft: '12%'
+  }
+
 });

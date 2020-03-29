@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
         height: 140,
         resizeMode: 'contain',
         marginTop: 3,
-        marginLeft: -10,
     },
     imageContainer: {
         alignItems: 'center',

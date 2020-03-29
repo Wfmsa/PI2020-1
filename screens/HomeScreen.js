@@ -16,7 +16,7 @@ export default class HomeScreen extends Component {
             <Text style={{ fontSize: 18 }}>escolha o tipo da conta</Text>
           </View>
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={styles.viewBotoesLogin}>
             <TouchableOpacity
               style={styles.iconM}
               activeOpacity={0.5}
@@ -39,8 +39,8 @@ export default class HomeScreen extends Component {
               <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Passageiro</Text>
             </TouchableOpacity>
           </View>
-          <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
         </ScrollView>
+        <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
       </View>
     );
   }
@@ -72,13 +72,14 @@ const styles = StyleSheet.create({
   iconM: {
     paddingTop: 20,
     marginBottom: '45%',
-    marginLeft: '12%'
   },
 
   iconP: {
     paddingTop: 20,
     marginBottom: '45%',
-    marginLeft: '12%'
+  },
+  viewBotoesLogin: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
-
 });

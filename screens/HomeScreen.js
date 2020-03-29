@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
 import NavigatorTab from '../components/Tabs/NavigatorTab';
 
 export default class HomeScreen extends Component {

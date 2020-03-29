@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 
-
 export default class HomeScreen extends Component {
 
     render() {
@@ -45,7 +44,7 @@ export default class HomeScreen extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-
+                <Text style={styles.txtRealizarCadastro} onPress={() => this.props.navigation.navigate('CadastroPassageiro')}>Realizar cadastro</Text>
             </View >
         );
     }
@@ -101,6 +100,10 @@ const styles = StyleSheet.create({
         borderLeftWidth: 1,
         borderRadius: 25
 
+    },
+    txtRealizarCadastro: {
+        color: 'blue',
+        textAlign: 'center',
+        marginTop: 30
     }
-
 });

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, ScrollView } from 'react-native-gesture-handler';
 
 
-export default class HomeScreen extends Component {
+export default class CadastroMotoristaScreen extends Component {
 
     render() {
         return (
-            <View>
-
-
+            <ScrollView>
                 <View style={styles.imageContainer}>
                     <Image
                         source={require('../assets/images/van.png')}
@@ -26,11 +24,33 @@ export default class HomeScreen extends Component {
                         placeholder="Digite seu usuario."
                     />
                     <Text style={styles.text}>
-                        Senha:
+                        E-mail:
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Digite seu e-mail."
+                    />
+                    <Text style={styles.text}>
+                        Repita o e-mail:
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Digite seu e-mail novamente."
+                    />
+                    <Text style={styles.text}>
+                        Escolha um senha:
                      </Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Digite sua senha"
+                        secureTextEntry
+                    />
+                    <Text style={styles.text}>
+                        Repita sua senha:
+                     </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Repita sua senha"
                         secureTextEntry
                     />
                 </View>
@@ -40,13 +60,12 @@ export default class HomeScreen extends Component {
                         style={styles.btn}
                         onPress={() => this.props.navigation.navigate('Map')}>
                         <Text>
-                            Login
+                            Cadastrar
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.txtRealizarCadastro} onPress={() => this.props.navigation.navigate('CadastroMotorista')}>Realizar cadastro</Text>
 
-            </View >
+            </ScrollView >
         );
     }
 }
@@ -58,7 +77,6 @@ const styles = StyleSheet.create({
 
     },
     formLogin: {
-        marginTop: '15%',
         alignItems: "center",
     },
     input: {
@@ -73,24 +91,27 @@ const styles = StyleSheet.create({
         borderRadius: 25
     },
     image: {
-        width: 160,
-        height: 140,
+        width: 100,
+        height: 87.5,
         resizeMode: 'contain',
         marginTop: 3,
     },
     imageContainer: {
         alignItems: 'center',
-        marginTop: '25%'
+        justifyContent: 'center',
+        height: 160
     },
     text: {
-        marginRight: '70%',
         padding: 10,
-        fontSize: 20
+        fontSize: 20,
+        marginLeft: '5%',
+        alignSelf: 'flex-start'
     },
     btn: {
         padding: 10,
         alignItems: "center",
         marginTop: '10%',
+        marginBottom: 40,
         width: '70%',
         marginLeft: '15%',
         borderStartWidth: 1,
@@ -100,11 +121,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderLeftWidth: 1,
         borderRadius: 25
-    },
-    txtRealizarCadastro: {
-        color: 'blue',
-        textAlign: 'center',
-        marginTop: 30
+
     }
 
 });

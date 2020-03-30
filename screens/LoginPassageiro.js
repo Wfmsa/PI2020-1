@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 
     },
     txtRealizarCadastro: {
-        color: 'blue',
+        color: 'black',
         textAlign: 'center',
         marginTop: 30
     }

@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderRadius: 25
     },
     txtRealizarCadastro: {
-        color: 'blue',
+        color: 'black',
         textAlign: 'center',
         marginTop: 30
     }

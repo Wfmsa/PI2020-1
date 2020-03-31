@@ -9,7 +9,6 @@ export default class HomeScreen extends Component {
         return (
             <View>
 
-
                 <View style={styles.imageContainer}>
                     <Image
                         source={require('../assets/images/passageiro.png')}
@@ -105,5 +104,6 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         marginTop: 30
-    }
+    },
+    
 });

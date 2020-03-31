@@ -80,5 +80,6 @@ const styles = StyleSheet.create({
   viewBotoesLogin: {
     flexDirection: 'row',
     justifyContent: 'space-around'
-  }
+  },
+  
 });

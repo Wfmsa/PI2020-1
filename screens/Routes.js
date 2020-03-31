@@ -16,11 +16,41 @@ const screens = {
             headerShown: false
         },
     },
-    Map: { screen: MapScreen },
-    LoginM: { screen: LoginMotoristaScreen },
-    LoginP: { screen: LoginPassageiro },
-    CadastroMotorista: { screen: CadastroMotoristaScreen },
-    CadastroPassageiro: { screen: CadastroPassageiroScreen }
+    Map: {
+        screen: MapScreen,
+        navigationOptions: {
+            title: 'Mapa',
+            headerShown: true
+        },
+    },
+    LoginM: {
+        screen: LoginMotoristaScreen,
+        navigationOptions: {
+            title: 'Login Motorista',
+            headerShown: true
+        },
+    },
+    LoginP: {
+        screen: LoginPassageiro,
+        navigationOptions: {
+            title: 'Login Passageiro',
+            headerShown: true
+        },
+    },
+    CadastroMotorista: {
+        screen: CadastroMotoristaScreen,
+        navigationOptions: {
+            title: 'Cadastro Motorista',
+            headerShown: true
+        },
+    },
+    CadastroPassageiro: {
+        screen: CadastroPassageiroScreen,
+        navigationOptions: {
+            title: 'Cadastro Passageiro',
+            headerShown: true
+        },
+    },
 }
 
 const Routes = createStackNavigator(screens);

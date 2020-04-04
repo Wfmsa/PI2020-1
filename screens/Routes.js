@@ -8,6 +8,7 @@ import LoginPassageiro from './LoginPassageiro';
 import CadastroMotoristaScreen from './CadastroMotoristaScreen';
 import CadastroPassageiroScreen from './CadastroPassageiroScreen';
 
+
 const screens = {
     Home: {
         screen: HomeScreen,
@@ -20,7 +21,7 @@ const screens = {
         screen: MapScreen,
         navigationOptions: {
             title: 'Mapa',
-            headerShown: true
+            headerShown: false
         },
     },
     LoginM: {
@@ -50,7 +51,7 @@ const screens = {
             title: 'Cadastro Passageiro',
             headerShown: true
         },
-    },
+    },       
 }
 
 const Routes = createStackNavigator(screens);

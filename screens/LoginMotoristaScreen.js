@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, ScrollView } from 'react-native-gesture-handler';
 
 
 export default class HomeScreen extends Component {
@@ -8,43 +8,43 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View>
+                <ScrollView>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../assets/images/van.png')}
+                            style={styles.image}
+                        />
+                    </View>
 
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../assets/images/van.png')}
-                        style={styles.image}
-                    />
-                </View>
-
-                <View style={styles.formLogin}>
-                    <Text style={styles.text}>
-                        Usuário:
+                    <View style={styles.formLogin}>
+                        <Text style={styles.text}>
+                            Usuário:
                     </Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite seu usuario."
-                    />
-                    <Text style={styles.text}>
-                        Senha:
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Digite seu usuario."
+                        />
+                        <Text style={styles.text}>
+                            Senha:
                      </Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite sua senha"
-                        secureTextEntry
-                    />
-                </View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Digite sua senha"
+                            secureTextEntry
+                        />
+                    </View>
 
-                <View>
-                    <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => this.props.navigation.navigate('Map')}>
-                        <Text>
-                            Login
+                    <View>
+                        <TouchableOpacity
+                            style={styles.btn}
+                            onPress={() => this.props.navigation.navigate('Map')}>
+                            <Text>
+                                Login
                         </Text>
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.txtRealizarCadastro} onPress={() => this.props.navigation.navigate('CadastroMotorista')}>Realizar cadastro</Text>
-
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.txtRealizarCadastro} onPress={() => this.props.navigation.navigate('CadastroMotorista')}>Realizar cadastro</Text>
+                </ScrollView>
             </View >
         );
     }

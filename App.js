@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import DrawerNavigator from './components/Navigation/DrawerNavigator';
+import DrawerNavigator from './screens/Routes';
 import { StyleSheet,} from 'react-native';
 
 export default function App(props) {

@@ -31,7 +31,7 @@ export default class MapScreen extends React.Component {
     if (latitude) {
       return (
         <View style={styles.container}>
-          <MenuButton onPress = {() => this.props.navigation.openDrawer()} />
+          <MenuButton onPress = {() => this.props.navigation.toggleDrawer()} />
           <MapView
             style={styles.map}
             initialRegion={{

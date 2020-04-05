@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
+
+const userInfo = { username: 'Admin', password: "123" }
 
 
 export default class HomeScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+        }
+    }
 
     render() {
         return (
@@ -23,6 +33,9 @@ export default class HomeScreen extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder="Digite seu usuario."
+                            onChangeText={(username) => this.setState({ username })}
+                            value={this.state.username}
+                            autoCapitalize="none"
                         />
                         <Text style={styles.text}>
                             Senha:
@@ -31,22 +44,34 @@ export default class HomeScreen extends Component {
                             style={styles.input}
                             placeholder="Digite sua senha"
                             secureTextEntry
+                            onChangeText={(password) => this.setState({ password })}
+                            value={this.state.password}
                         />
                     </View>
 
                     <View>
                         <TouchableOpacity
                             style={styles.btn}
-                            onPress={() => this.props.navigation.navigate('Map')}>
+                            onPress={this._login}
+                        >
                             <Text>
                                 Login
-                        </Text>
+                            </Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.txtRealizarCadastro} onPress={() => this.props.navigation.navigate('CadastroPassageiro')}>Realizar cadastro</Text>
                 </ScrollView>
             </View >
         );
+    }
+
+    _login = async () => {
+        if (userInfo.username === this.state.username && userInfo.password === this.state.password) {
+            await AsyncStorage.setItem('isLoggedIn', '1');
+            this.props.navigation.navigate('Map');
+        } else {
+            alert('Usuario ou senha incorreta!');
+        }
     }
 }
 

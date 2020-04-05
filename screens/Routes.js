@@ -38,7 +38,7 @@ const CustomDrawerComponent = (props) => (
                         {
                             text: 'Confirmar', onPress: () => {
                                 AsyncStorage.clear();
-                                props.navigation.navigate('LoginP')
+                                props.navigation.navigate('Home')
                             }
                         },
                     ],
@@ -72,21 +72,7 @@ const DrawerNavigator = createDrawerNavigator(
                     <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'black'} />
                 ),
             }
-        },
-        LoginM: {
-            screen: LoginMotoristaScreen,
-            navigationOptions: {
-                drawerLabel: <Hidden />,
-                drawerLockMode: 'locked-closed'
-            },
-        },
-        LoginP: {
-            screen: LoginPassageiro,
-            navigationOptions: {
-                drawerLabel: <Hidden />,
-                drawerLockMode: 'locked-closed'
-            },
-        },
+        }, 
         CadastroMotorista: {
             screen: CadastroMotoristaScreen,
             navigationOptions: {
@@ -121,6 +107,20 @@ const AuthStack = createDrawerNavigator({
             drawerLockMode: 'locked-closed'
         }
     },
+    LoginM: {
+        screen: LoginMotoristaScreen,
+        navigationOptions: {
+            drawerLabel: <Hidden />,
+            drawerLockMode: 'locked-closed'
+        },
+    },
+    LoginP: {
+        screen: LoginPassageiro,
+        navigationOptions: {
+            drawerLabel: <Hidden />,
+            drawerLockMode: 'locked-closed'
+        },
+    },
 })
 
 class AuthLoadingScreen extends Component {
@@ -146,10 +146,10 @@ class AuthLoadingScreen extends Component {
 export default createAppContainer(createDrawerNavigator(
     {
         AuthLoading: {
-            screen: AuthLoadingScreen,            
+            screen: AuthLoadingScreen,
         },
         App: {
-            screen: DrawerNavigator,            
+            screen: DrawerNavigator,
         },
         Auth: {
             screen: AuthStack,

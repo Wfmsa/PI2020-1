@@ -12,6 +12,7 @@ import LoginMotoristaScreen from './LoginMotoristaScreen';
 import LoginPassageiro from './LoginPassageiro';
 import CadastroMotoristaScreen from './CadastroMotoristaScreen';
 import CadastroPassageiroScreen from './CadastroPassageiroScreen';
+import { createStackNavigator } from 'react-navigation-stack';
 
 
 class Hidden extends React.Component {
@@ -72,7 +73,7 @@ const DrawerNavigator = createDrawerNavigator(
                     <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'black'} />
                 ),
             }
-        }, 
+        },
         CadastroMotorista: {
             screen: CadastroMotoristaScreen,
             navigationOptions: {
@@ -96,29 +97,23 @@ const DrawerNavigator = createDrawerNavigator(
     }
 );
 
-const AuthStack = createDrawerNavigator({
+const AuthStack = createStackNavigator({
     Home: {
         screen: HomeScreen,
         navigationOptions: {
-            drawerLabel: 'Inicio',
-            drawerIcon: ({ focused }) => (
-                <Ionicons name="md-home" size={24} color={focused ? 'orange' : 'black'} />
-            ),
-            drawerLockMode: 'locked-closed'
+            headerShown: false
         }
     },
     LoginM: {
         screen: LoginMotoristaScreen,
         navigationOptions: {
-            drawerLabel: <Hidden />,
-            drawerLockMode: 'locked-closed'
+            title: 'Login Motorista'
         },
     },
     LoginP: {
         screen: LoginPassageiro,
         navigationOptions: {
-            drawerLabel: <Hidden />,
-            drawerLockMode: 'locked-closed'
+            title: 'Login Passageiro'
         },
     },
 })
@@ -145,16 +140,19 @@ class AuthLoadingScreen extends Component {
 
 export default createAppContainer(createDrawerNavigator(
     {
-        AuthLoading: {
-            screen: AuthLoadingScreen,
-        },
+        AuthLoading: AuthLoadingScreen,
+
         App: {
             screen: DrawerNavigator,
+            navigationOptions: {
+                headerShown: false
+            }
         },
         Auth: {
             screen: AuthStack,
             navigationOptions: {
-                drawerLockMode: 'locked-closed'
+                drawerLockMode: 'locked-closed',
+                headerShown: false
             }
         },
     },

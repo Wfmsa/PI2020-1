@@ -62,7 +62,6 @@ const DrawerNavigator = createDrawerNavigator(
                 drawerIcon: ({ focused }) => (
                     <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'black'} />
                 ),
-                drawerLockMode: 'locked-closed'
             }
         },
         Settings: {
@@ -108,7 +107,6 @@ const LeftDrawer = createDrawerNavigator(
         }
     },
     {
-        getCustomActionCreators: (route, stateKey) => { return { toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }) }; },
         drawerPosition: 'left',
         contentComponent: CustomDrawerComponent
     }
@@ -125,7 +123,6 @@ const RightDrawer = createDrawerNavigator(
         }
     },
     {
-        getCustomActionCreators: (route, stateKey) => { return { toggleRightDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }) }; },
         drawerPosition: 'right',
     }
 );

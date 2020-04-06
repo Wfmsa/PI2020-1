@@ -3,9 +3,7 @@ import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
-import LeftDrawer from '../screens/Routes';
-import RightDrawer from '../screens/Routes';
-
+import 'react-native-gesture-handler';
 
 
 export default class MapScreen extends React.Component {
@@ -33,8 +31,8 @@ export default class MapScreen extends React.Component {
     if (latitude) {
       return (
         <View style={styles.container}>
-          <MenuButton onPress = {() => this.props.navigation.toggleDrawer()} />
-          <MoreButton onPress = {() => this.props.navigation.toggleDrawer()} />
+          <MenuButton onPress={() => this.props.navigation.toggleDrawer()} />
+          <MoreButton onPress={() => this.props.navigation.toggleDrawer()} />
           <MapView
             style={styles.map}
             initialRegion={{
@@ -46,6 +44,8 @@ export default class MapScreen extends React.Component {
             showsUserLocation
             rotateEnabled={false}
           />
+          <View style={styles.mapDrawerOverlay} />
+          <View style={styles.mapDrawerOverlayRight} />
         </View >
       );
     }
@@ -75,10 +75,8 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: '90%',
-    flex: 1,
-    alignItems: "center"
+    width: Dimensions.get("window").width,
+    height: Dimensions.get('window').height,
   },
   mapView: {
     flex: 1,
@@ -87,5 +85,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  mapDrawerOverlay: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    opacity: 0.0,
+    height: Dimensions.get('window').height,
+    width: 20,
+  },
+  mapDrawerOverlayRight: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    opacity: 0.0,
+    height: Dimensions.get('window').height,
+    width: 20,
   },
 })

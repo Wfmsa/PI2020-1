@@ -99,7 +99,13 @@ const DrawerNavigator = createDrawerNavigator(
 
 const LeftDrawer = createDrawerNavigator(
     {
-        LeftDrawer: DrawerNavigator,
+        LeftDrawer: {
+            screen: DrawerNavigator,
+            navigationOptions: {
+                drawerLabel: <Hidden />,
+                drawerLockMode: 'locked-closed'
+            }
+        }
     },
     {
         getCustomActionCreators: (route, stateKey) => { return { toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }) }; },
@@ -114,7 +120,7 @@ const RightDrawer = createDrawerNavigator(
         Drawer: {
             screen: LeftDrawer,
             navigationOptions: {
-                drawerLabel: <Hidden />
+                drawerLabel: <Hidden />,                
             }
         }
     },
@@ -165,7 +171,7 @@ class AuthLoadingScreen extends Component {
     }
 }
 
-export default createAppContainer(createDrawerNavigator(
+export default createAppContainer(createStackNavigator(
     {
         AuthLoading: AuthLoadingScreen,
 

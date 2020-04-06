@@ -2,7 +2,9 @@ import * as React from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
-
+import MoreButton from '../components/Tabs/MoreButton';
+import LeftDrawer from '../screens/Routes';
+import RightDrawer from '../screens/Routes';
 
 
 
@@ -32,6 +34,7 @@ export default class MapScreen extends React.Component {
       return (
         <View style={styles.container}>
           <MenuButton onPress = {() => this.props.navigation.toggleDrawer()} />
+          <MoreButton onPress = {() => this.props.navigation.toggleDrawer()} />
           <MapView
             style={styles.map}
             initialRegion={{
@@ -42,7 +45,6 @@ export default class MapScreen extends React.Component {
             }}
             showsUserLocation
             rotateEnabled={false}
-            showsMyLocationButton={true}
           />
         </View >
       );

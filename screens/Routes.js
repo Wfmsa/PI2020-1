@@ -97,6 +97,33 @@ const DrawerNavigator = createDrawerNavigator(
     }
 );
 
+const LeftDrawer = createDrawerNavigator(
+    {
+        LeftDrawer: DrawerNavigator,
+    },
+    {
+        getCustomActionCreators: (route, stateKey) => { return { toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }) }; },
+        drawerPosition: 'left',
+        contentComponent: CustomDrawerComponent
+    }
+);
+
+
+const RightDrawer = createDrawerNavigator(
+    {
+        Drawer: {
+            screen: LeftDrawer,
+            navigationOptions: {
+                drawerLabel: <Hidden />
+            }
+        }
+    },
+    {
+        getCustomActionCreators: (route, stateKey) => { return { toggleRightDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }) }; },
+        drawerPosition: 'right',
+    }
+);
+
 const AuthStack = createStackNavigator({
     Home: {
         screen: HomeScreen,
@@ -143,7 +170,7 @@ export default createAppContainer(createDrawerNavigator(
         AuthLoading: AuthLoadingScreen,
 
         App: {
-            screen: DrawerNavigator,
+            screen: RightDrawer,
             navigationOptions: {
                 headerShown: false
             }

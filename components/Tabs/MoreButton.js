@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import {
+    StyleSheet,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default class MenuButton extends React.Component {
@@ -8,7 +10,7 @@ export default class MenuButton extends React.Component {
             <Ionicons
                 name="md-more"
                 color="black"
-                size={32}
+                size={35}
                 style={styles.menuIcon}
                 onPress={() => this.props.onPress()}
             />
@@ -20,7 +22,9 @@ const styles = StyleSheet.create({
     menuIcon: {
         zIndex: 9,
         position: "absolute",
-        top: "5%",
-        left: "90%"
+        top: "1%",
+        left: "90%",
+        paddingLeft: 10,
+        paddingRight: 10,
     }
 });

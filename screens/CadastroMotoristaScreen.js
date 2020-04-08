@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput, ScrollView } from 'react-native-gesture-handler';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    TextInput,
+    ScrollView
+} from 'react-native-gesture-handler';
 
 
 export default class CadastroMotoristaScreen extends Component {

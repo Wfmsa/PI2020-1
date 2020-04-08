@@ -1,9 +1,14 @@
 import * as React from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Image,
+  SafeAreaView
+} from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
-import 'react-native-gesture-handler';
 
 
 export default class MapScreen extends React.Component {
@@ -25,20 +30,17 @@ export default class MapScreen extends React.Component {
 
 
   render() {
-    //Pega as informaçoes do State para utilizar no initialRegion.
-    const { latitude, longitude } = this.state
-
-    if (latitude) {
+    if (this.state.latitude) {
       return (
         <View style={styles.container}>
-          <SafeAreaView style={{flex:1}}>
+          <SafeAreaView style={{ flex: 1 }}>
             <MenuButton onPress={() => this.props.navigation.toggleDrawer()} />
             <MoreButton onPress={() => this.props.navigation.toggleDrawer()} />
             <MapView
               style={styles.map}
               initialRegion={{
-                latitude,
-                longitude,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
                 latitudeDelta: 0.0143,
                 longitudeDelta: 0.0134,
               }}
@@ -86,7 +88,8 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor:"#303030"
   },
   mapDrawerOverlay: {
     position: 'absolute',

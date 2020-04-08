@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    AsyncStorage
+} from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 
 const userInfo = { username: 'Admin', password: "123" }
-
 
 export default class HomeScreen extends Component {
 

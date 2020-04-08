@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import NavigatorTab from '../components/Tabs/NavigatorTab';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -41,7 +47,6 @@ export default class HomeScreen extends Component {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
         </SafeAreaView>
       </View>
     );

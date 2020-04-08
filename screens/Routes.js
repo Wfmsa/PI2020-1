@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { Dimensions, View, TouchableOpacity, SafeAreaView, ScrollView, Text, Alert, AsyncStorage } from "react-native";
+import {
+    Dimensions,
+    View,
+    TouchableOpacity,
+    SafeAreaView, ScrollView,
+    Text,
+    Alert,
+    Image,
+    AsyncStorage,
+    ActivityIndicator,
+    StatusBar
+} from "react-native";
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import { ActivityIndicator, StatusBar } from 'react-native';
-
+import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from './HomeScreen';
 import MapScreen from './MapScreen';
@@ -12,8 +22,8 @@ import LoginMotoristaScreen from './LoginMotoristaScreen';
 import LoginPassageiro from './LoginPassageiro';
 import CadastroMotoristaScreen from './CadastroMotoristaScreen';
 import CadastroPassageiroScreen from './CadastroPassageiroScreen';
-import { createStackNavigator } from 'react-navigation-stack';
 import RotasScreen from './RotasScreen';
+
 
 
 class Hidden extends React.Component {
@@ -22,12 +32,10 @@ class Hidden extends React.Component {
     }
 }
 
-const WIDTH = Dimensions.get('window').width;
-
 const CustomDrawerComponent = (props) => (
     <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ height: 150, backgroundColor: 'snow', alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="md-contact" size={80} color="gray" />
+        <View style={{ height: 150, backgroundColor: 'silver', alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="md-contact" size={80} color="black" />
         </View>
         <ScrollView>
             <DrawerItems {...props} />
@@ -54,7 +62,7 @@ const CustomDrawerComponent = (props) => (
     </SafeAreaView>
 )
 
-const DrawerNavigator = createDrawerNavigator(
+const LeftDrawer = createDrawerNavigator(
     {
         Map: {
             screen: MapScreen,
@@ -62,15 +70,6 @@ const DrawerNavigator = createDrawerNavigator(
                 drawerLabel: 'Mapa',
                 drawerIcon: ({ focused }) => (
                     <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'black'} />
-                ),
-            }
-        },
-        Settings: {
-            screen: HomeScreen,
-            navigationOptions: {
-                drawerLabel: 'Configurações',
-                drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'black'} />
                 ),
             }
         },
@@ -82,7 +81,16 @@ const DrawerNavigator = createDrawerNavigator(
                     <Ionicons name="md-pin" size={24} color={focused ? 'orange' : 'black'} />
                 ),
             }
-        }
+        },
+        Settings: {
+            screen: RotasScreen,
+            navigationOptions: {
+                drawerLabel: 'Configurações',
+                drawerIcon: ({ focused }) => (
+                    <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'black'} />
+                ),
+            }
+        },
     },
     {
         contentOptions: {
@@ -91,23 +99,6 @@ const DrawerNavigator = createDrawerNavigator(
         contentComponent: CustomDrawerComponent,
     }
 );
-
-const LeftDrawer = createDrawerNavigator(
-    {
-        LeftDrawer: {
-            screen: DrawerNavigator,
-            navigationOptions: {
-                drawerLabel: <Hidden />,
-                drawerLockMode: 'locked-closed'
-            }
-        }
-    },
-    {
-        drawerPosition: 'left',
-        contentComponent: CustomDrawerComponent
-    }
-);
-
 
 const RightDrawer = createDrawerNavigator(
     {
@@ -163,7 +154,17 @@ class AuthLoadingScreen extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Image
+                    source={require('../assets/images/van.png')}
+                    style={{
+                        width: 100,
+                        height: 80,
+                        resizeMode: 'contain',
+                        marginTop: 3,
+                        marginLeft: -10,
+                    }}
+                />
                 <ActivityIndicator />
                 <StatusBar barStyle="default" />
             </View>
@@ -174,9 +175,10 @@ class AuthLoadingScreen extends Component {
         const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         this.props.navigation.navigate(!isLoggedIn !== '1' ? 'Auth' : 'App')
     }
+    
 }
 
-export default createAppContainer(createStackNavigator(
+export default createAppContainer(createSwitchNavigator(
     {
         AuthLoading: AuthLoadingScreen,
 

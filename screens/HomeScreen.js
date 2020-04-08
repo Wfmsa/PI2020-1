@@ -2,44 +2,47 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import NavigatorTab from '../components/Tabs/NavigatorTab';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class HomeScreen extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          <View style={styles.welcomeContainer}>
-            <Text style={{ fontSize: 40 }}>Bem-Vindo</Text>
-            <Text style={{ fontSize: 18 }}>escolha o tipo da conta</Text>
-          </View>
+            <View style={styles.welcomeContainer}>
+              <Text style={{ fontSize: 40 }}>Bem-Vindo</Text>
+              <Text style={{ fontSize: 18 }}>escolha o tipo da conta</Text>
+            </View>
 
-          <View style={styles.viewBotoesLogin}>
-            <TouchableOpacity
-              style={styles.iconM}
-              activeOpacity={0.5}
-              onPress={() => this.props.navigation.navigate('LoginM')}>
-              <Image
-                source={require('../assets/images/volante.png')}
-                style={styles.welcomeImage}
-              />
-              <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Motorista</Text>
-            </TouchableOpacity>
+            <View style={styles.viewBotoesLogin}>
+              <TouchableOpacity
+                style={styles.iconM}
+                activeOpacity={0.5}
+                onPress={() => this.props.navigation.navigate('LoginM')}>
+                <Image
+                  source={require('../assets/images/volante.png')}
+                  style={styles.welcomeImage}
+                />
+                <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Motorista</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.iconP}
-              activeOpacity={0.5}
-              onPress={() => this.props.navigation.navigate('LoginP')}>
-              <Image
-                source={require('../assets/images/passageiro.png')}
-                style={styles.welcomeImage}
-              />
-              <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Passageiro</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-        <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
+              <TouchableOpacity
+                style={styles.iconP}
+                activeOpacity={0.5}
+                onPress={() => this.props.navigation.navigate('LoginP')}>
+                <Image
+                  source={require('../assets/images/passageiro.png')}
+                  style={styles.welcomeImage}
+                />
+                <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 5 }}>Passageiro</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+          <NavigatorTab rightBtn={() => this.props.navigation.navigate('Map')} />
+        </SafeAreaView>
       </View>
     );
   }
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 100,
     resizeMode: 'contain',
-  }, 
+  },
   iconM: {
     paddingTop: 20,
     marginBottom: '45%',
@@ -81,5 +84,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  
+
 });

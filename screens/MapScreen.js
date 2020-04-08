@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
 import 'react-native-gesture-handler';
@@ -31,21 +31,23 @@ export default class MapScreen extends React.Component {
     if (latitude) {
       return (
         <View style={styles.container}>
-          <MenuButton onPress={() => this.props.navigation.toggleDrawer()} />
-          <MoreButton onPress={() => this.props.navigation.toggleDrawer()} />
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude,
-              longitude,
-              latitudeDelta: 0.0143,
-              longitudeDelta: 0.0134,
-            }}
-            showsUserLocation
-            rotateEnabled={false}
-          />
-          <View style={styles.mapDrawerOverlay} />
-          <View style={styles.mapDrawerOverlayRight} />
+          <SafeAreaView style={{flex:1}}>
+            <MenuButton onPress={() => this.props.navigation.toggleDrawer()} />
+            <MoreButton onPress={() => this.props.navigation.toggleDrawer()} />
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude,
+                longitude,
+                latitudeDelta: 0.0143,
+                longitudeDelta: 0.0134,
+              }}
+              showsUserLocation
+              rotateEnabled={false}
+            />
+            <View style={styles.mapDrawerOverlay} />
+            <View style={styles.mapDrawerOverlayRight} />
+          </SafeAreaView>
         </View >
       );
     }

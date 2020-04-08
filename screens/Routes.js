@@ -13,6 +13,7 @@ import LoginPassageiro from './LoginPassageiro';
 import CadastroMotoristaScreen from './CadastroMotoristaScreen';
 import CadastroPassageiroScreen from './CadastroPassageiroScreen';
 import { createStackNavigator } from 'react-navigation-stack';
+import RotasScreen from './RotasScreen';
 
 
 class Hidden extends React.Component {
@@ -25,8 +26,8 @@ const WIDTH = Dimensions.get('window').width;
 
 const CustomDrawerComponent = (props) => (
     <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ height: 150, backgroundColor: '#303030', alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="md-person" size={80} color="white" />
+        <View style={{ height: 150, backgroundColor: 'snow', alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="md-contact" size={80} color="gray" />
         </View>
         <ScrollView>
             <DrawerItems {...props} />
@@ -73,20 +74,15 @@ const DrawerNavigator = createDrawerNavigator(
                 ),
             }
         },
-        CadastroMotorista: {
-            screen: CadastroMotoristaScreen,
+        Rotas: {
+            screen: RotasScreen,
             navigationOptions: {
-                drawerLabel: <Hidden />,
-                drawerLockMode: 'locked-closed'
-            },
-        },
-        CadastroPassageiro: {
-            screen: CadastroPassageiroScreen,
-            navigationOptions: {
-                drawerLabel: <Hidden />,
-                drawerLockMode: 'locked-closed'
-            },
-        },
+                drawerLabel: 'Rotas',
+                drawerIcon: ({ focused }) => (
+                    <Ionicons name="md-pin" size={24} color={focused ? 'orange' : 'black'} />
+                ),
+            }
+        }
     },
     {
         contentOptions: {
@@ -118,7 +114,7 @@ const RightDrawer = createDrawerNavigator(
         Drawer: {
             screen: LeftDrawer,
             navigationOptions: {
-                drawerLabel: <Hidden />,                
+                drawerLabel: <Hidden />,
             }
         }
     },
@@ -144,6 +140,18 @@ const AuthStack = createStackNavigator({
         screen: LoginPassageiro,
         navigationOptions: {
             title: 'Login Passageiro'
+        },
+    },
+    CadastroMotorista: {
+        screen: CadastroMotoristaScreen,
+        navigationOptions: {
+            title: 'Cadastro Motorista'
+        },
+    },
+    CadastroPassageiro: {
+        screen: CadastroPassageiroScreen,
+        navigationOptions: {
+            title: 'Cadastro Passageiro'
         },
     },
 })

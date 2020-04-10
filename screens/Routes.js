@@ -9,7 +9,8 @@ import {
     Image,
     AsyncStorage,
     ActivityIndicator,
-    StatusBar
+    StatusBar,
+    StyleSheet
 } from "react-native";
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
@@ -33,9 +34,9 @@ class Hidden extends React.Component {
 }
 
 const CustomDrawerComponent = (props) => (
-    <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ height: 150, backgroundColor: 'silver', alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="md-contact" size={80} color="black" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
+        <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="md-contact" size={80} color="lightgray" />
         </View>
         <ScrollView>
             <DrawerItems {...props} />
@@ -55,9 +56,83 @@ const CustomDrawerComponent = (props) => (
                     { cancelable: false }
                 )
             }>
-                <Ionicons name="md-log-out" size={24} style={{ paddingTop: 5, marginLeft: 19 }} />
-                <Text style={{ paddingTop: 7, marginLeft: 34, fontWeight: 'bold', }}>Sair</Text>
+                <Ionicons name="md-log-out" size={24} style={{ paddingTop: 5, marginLeft: 19 }} color="lightgray" />
+                <Text style={{ color: "lightgray", paddingTop: 7, marginLeft: 34, fontWeight: 'bold', }}>Sair</Text>
             </TouchableOpacity>
+        </ScrollView>
+    </SafeAreaView>
+)
+
+const RightCustomDrawerComponent = (props) => (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
+        <ScrollView>
+            <DrawerItems {...props} />
+            <Text style={styles.text}>Confirmados - 1</Text>
+            <View style={{ flexDirection: "row", }}>
+                <Ionicons name="md-contact" size={50}
+                    style={{
+                        paddingTop: 5,
+                        marginLeft: 19,
+                    }}
+                    color="lightgray" />
+                <View style={{
+                    width: 15,
+                    height: 15,
+                    borderRadius: 15 / 2,
+                    borderWidth: 2,
+                    borderColor: '#303030',
+                    backgroundColor: "lime",
+                    marginTop: 35,
+                    marginLeft: 45,
+                    position: 'absolute',
+                    overflow: "hidden"
+                }} />
+                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Caio</Text>
+            </View>
+            <Text style={styles.text}>Negados - 1</Text>
+            <View style={{ flexDirection: "row", }}>
+                <Ionicons name="md-contact" size={50}
+                    style={{
+                        paddingTop: 5,
+                        marginLeft: 19,
+                    }}
+                    color="lightgray" />
+                <View style={{
+                    width: 15,
+                    height: 15,
+                    borderRadius: 15 / 2,
+                    borderWidth: 2,
+                    borderColor: '#303030',
+                    backgroundColor: "red",
+                    marginTop: 35,
+                    marginLeft: 45,
+                    position: 'absolute',
+                    overflow: "hidden"
+                }} />
+                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Diego</Text>
+            </View>
+            <Text style={styles.text}>Aguardando - 1</Text>
+            <View style={{ flexDirection: "row", }}>
+                <Ionicons name="md-contact" size={50}
+                    style={{
+                        paddingTop: 5,
+                        marginLeft: 19,
+                    }}
+                    color="lightgray" />
+                <View style={{
+                    width: 15,
+                    height: 15,
+                    borderRadius: 15 / 2,
+                    borderWidth: 2,
+                    borderColor: '#303030',
+                    backgroundColor: "orange",
+                    marginTop: 33,
+                    marginLeft: 43,
+                    position: 'absolute',
+                    overflow: "hidden"
+                }} />
+                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Pedro</Text>
+            </View>
         </ScrollView>
     </SafeAreaView>
 )
@@ -69,16 +144,17 @@ const LeftDrawer = createDrawerNavigator(
             navigationOptions: {
                 drawerLabel: 'Mapa',
                 drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'black'} />
+                    <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'white'} />
                 ),
-            }
+
+            },
         },
         Rotas: {
             screen: RotasScreen,
             navigationOptions: {
                 drawerLabel: 'Rotas',
                 drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-pin" size={24} color={focused ? 'orange' : 'black'} />
+                    <Ionicons name="md-pin" size={24} color={focused ? 'orange' : 'white'} />
                 ),
             }
         },
@@ -87,16 +163,18 @@ const LeftDrawer = createDrawerNavigator(
             navigationOptions: {
                 drawerLabel: 'Configurações',
                 drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'black'} />
+                    <Ionicons name="md-settings" size={24} color={focused ? 'orange' : 'white'} />
                 ),
             }
         },
     },
     {
         contentOptions: {
-            activeTintColor: 'orange'
+            activeTintColor: 'orange',
+            inactiveTintColor: 'lightgray',
         },
         contentComponent: CustomDrawerComponent,
+
     }
 );
 
@@ -111,6 +189,7 @@ const RightDrawer = createDrawerNavigator(
     },
     {
         drawerPosition: 'right',
+        contentComponent: RightCustomDrawerComponent,
     }
 );
 
@@ -175,7 +254,7 @@ class AuthLoadingScreen extends Component {
         const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         this.props.navigation.navigate(!isLoggedIn !== '1' ? 'Auth' : 'App')
     }
-    
+
 }
 
 export default createAppContainer(createSwitchNavigator(
@@ -200,3 +279,12 @@ export default createAppContainer(createSwitchNavigator(
         initialRouteName: 'AuthLoading'
     }
 ));
+
+const styles = StyleSheet.create({
+    text: {
+        color: "lightgray",
+        marginLeft: 19,
+        fontSize: 15,
+        fontWeight: "bold"
+    }
+})

@@ -8,7 +8,7 @@ export default class MenuButton extends React.Component {
     render() {
         return (
             <Ionicons
-                name="md-more"
+                name="md-people"
                 color="black"
                 size={35}
                 style={styles.menuIcon}
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         zIndex: 9,
         position: "absolute",
         top: "1%",
-        left: "90%",
+        left: "85%",
         paddingLeft: 10,
         paddingRight: 10,
     }

@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../control/cacambaControl.php';
+include __DIR__.'/../control/USERS_MOTORISTAControl.php';
  
 $data = file_get_contents('php://input');
 $obj =  json_decode($data);
@@ -8,8 +8,8 @@ $obj =  json_decode($data);
 $id = $obj->id;
 
 if(!empty($data)){	
- $cacambaControl = new cacambaControl();
- $cacambaControl->delete($obj,$id);
+ $USERS_MOTORISTAControl = new USERS_MOTORISTAControl();
+ $USERS_MOTORISTAControl->delete($obj,$id);
  header('Location:listar.php');
 }
 

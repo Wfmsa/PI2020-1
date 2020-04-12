@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../control/cacambaControl.php';
+include __DIR__.'/../control/USERS_PASSAGEIROSControl.php';
  
 $data = file_get_contents('php://input');
 $obj =  json_decode($data);
@@ -13,8 +13,8 @@ if(!$id) {
 }
 else {
 	if(!empty($data)){	
-	 $cacambaControl = new cacambaControl();
-	 $cacambaControl->update($obj , $id);
+	 $USERS_PASSAGEIROSControl = new USERS_PASSAGEIROSControl();
+	 $USERS_PASSAGEIROSControl->update($obj , $id);
 	}
 }
 

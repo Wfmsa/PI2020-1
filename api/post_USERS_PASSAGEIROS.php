@@ -1,15 +1,17 @@
 <?php
-include __DIR__.'/../control/cacambaControl.php';
- 
+include __DIR__.'/../control/USERS_PASSAGEIROSControl.php';
+header("Access-Control-Allow-Origin: *");
+
+
+header('Content-type: application/json');
+
 $data = file_get_contents('php://input');
 $obj =  json_decode($data);
 
-//echo $obj->titulo; /*VER OBJETO*/
-
 if(!empty($data)){	
 	try {
- 		$cacambaControl = new cacambaControl();
- 		$cacambaControl->insert($obj);
+ 		$USERS_PASSAGEIROSControl = new USERS_PASSAGEIROSControl();
+ 		$USERS_PASSAGEIROSControl->insert($obj);
  		http_response_code(200);
  		echo json_encode($obj);
  	}

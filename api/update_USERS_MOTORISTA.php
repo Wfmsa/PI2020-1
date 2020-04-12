@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../control/PessoaControl.php';
+include __DIR__.'/../control/USERS_MOTORISTAControl.php';
  
 $data = file_get_contents('php://input');
 $obj =  json_decode($data);
@@ -13,8 +13,8 @@ if(!$id) {
 }
 else {
 	if(!empty($data)){	
-	 $PessoaControl = new PessoaControl();
-	 $PessoaControl->update($obj , $id);
+	 $USERS_MOTORISTAControl = new USERS_MOTORISTAControl();
+	 $USERS_MOTORISTAControl->update($obj , $id);
 	}
 }
 

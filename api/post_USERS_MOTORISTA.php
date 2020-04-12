@@ -1,17 +1,15 @@
 <?php
-include __DIR__.'/../control/PessoaControl.php';
-header("Access-Control-Allow-Origin: *");
-
-
-header('Content-type: application/json');
-
+include __DIR__.'/../control/USERS_MOTORISTAControl.php';
+ 
 $data = file_get_contents('php://input');
 $obj =  json_decode($data);
 
+//echo $obj->titulo; /*VER OBJETO*/
+
 if(!empty($data)){	
 	try {
- 		$pessoaControl = new PessoaControl();
- 		$pessoaControl->insert($obj);
+ 		$USERS_MOTORISTAControl = new USERS_MOTORISTAControl();
+ 		$USERS_MOTORISTAControl->insert($obj);
  		http_response_code(200);
  		echo json_encode($obj);
  	}

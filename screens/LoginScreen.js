@@ -12,11 +12,10 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
 
-const userInfo = { username: '', password: "" }
+const userInfo = { email: '', password: "" }
 
 export default class HomeScreen extends Component {
 
@@ -25,7 +24,7 @@ export default class HomeScreen extends Component {
     super(props);
     this.state = {
       userInfo: {
-        username: '',
+        email: '',
         password: '',
       },
       accountOption: {
@@ -69,8 +68,8 @@ export default class HomeScreen extends Component {
             <TextInput
               style={styles.input}
               placeholder="Digite seu e-mail."
-              onChangeText={(username) => this.setState({ userInfo: { username } })}
-              value={this.state.username}
+              onChangeText={(email) => this.setState({ userInfo: { email } })}
+              value={this.state.email}
               autoCapitalize="none"
             />
             <Text style={styles.text}>Senha:</Text>
@@ -156,7 +155,7 @@ export default class HomeScreen extends Component {
 
   _login = async () => {
     if (this.state.accountOption.checkedRadio === "motorista") {
-      if (userInfo.username === this.state.userInfo.username && userInfo.password === this.state.userInfo.password) {
+      if (userInfo.email === this.state.userInfo.email && userInfo.password === this.state.userInfo.password) {
         await AsyncStorage.setItem('isLoggedIn', '1');
         await AsyncStorage.setItem('Tipo', 'M');
         this.props.navigation.navigate('MapM');
@@ -164,7 +163,7 @@ export default class HomeScreen extends Component {
         Alert.alert("Login", "Email ou senha incorreta!")
       }
     } else if (this.state.accountOption.checkedRadio === "passageiro") {
-      if (userInfo.username === this.state.userInfo.username && userInfo.password === this.state.userInfo.password) {
+      if (userInfo.email === this.state.userInfo.email && userInfo.password === this.state.userInfo.password) {
         await AsyncStorage.setItem('isLoggedIn', '1');
         await AsyncStorage.setItem('Tipo', 'P');
 

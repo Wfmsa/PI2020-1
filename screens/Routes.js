@@ -12,8 +12,8 @@ import {
     StatusBar,
     StyleSheet
 } from "react-native";
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createDrawerNavigator, DrawerItems, DrawerActions } from 'react-navigation-drawer';
+import { createAppContainer, createSwitchNavigator, } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation-stack';
 
@@ -192,7 +192,11 @@ const LeftDrawer = createDrawerNavigator(
             inactiveTintColor: 'lightgray',
         },
         contentComponent: CustomDrawerComponent,
-
+        getCustomActionCreators: (route, stateKey) => {
+            return {
+                toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+            };
+        },
     }
 );
 
@@ -208,6 +212,11 @@ const RightDrawer = createDrawerNavigator(
     {
         drawerPosition: 'right',
         contentComponent: RightCustomDrawerComponent,
+        getCustomActionCreators: (route, stateKey) => {
+            return {
+                toggleRightDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+            };
+        },
     }
 );
 

@@ -17,13 +17,12 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import HomeScreen from './HomeScreen';
+import LoginScreen from './LoginScreen';
 import MapScreen from './MapScreen';
-import LoginMotoristaScreen from './LoginMotoristaScreen';
-import LoginPassageiro from './LoginPassageiro';
-import CadastroMotoristaScreen from './CadastroMotoristaScreen';
-import CadastroPassageiroScreen from './CadastroPassageiroScreen';
+import CadastroScreen from './CadastroScreen';
 import RotasScreen from './RotasScreen';
+import PassageiroScreen from './PassageiroScreen';
+import MapScreenMotorista from './MapScreenMotorista';
 
 
 
@@ -36,7 +35,10 @@ class Hidden extends React.Component {
 const CustomDrawerComponent = (props) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
         <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="md-contact" size={80} color="lightgray" />
+            <TouchableOpacity onPress={() => props.navigation.navigate('ProfileP')}>
+                <Ionicons name="md-contact" size={80} color="lightgray" />
+                <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>Nome</Text>
+            </TouchableOpacity>
         </View>
         <ScrollView>
             <DrawerItems {...props} />
@@ -49,7 +51,7 @@ const CustomDrawerComponent = (props) => (
                         {
                             text: 'Confirmar', onPress: () => {
                                 AsyncStorage.clear();
-                                props.navigation.navigate('Home')
+                                props.navigation.navigate('Login')
                             }
                         },
                     ],
@@ -139,10 +141,20 @@ const RightCustomDrawerComponent = (props) => (
 
 const LeftDrawer = createDrawerNavigator(
     {
-        Map: {
+        MapP: {
             screen: MapScreen,
             navigationOptions: {
                 drawerLabel: 'Mapa',
+                drawerIcon: ({ focused }) => (
+                    <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'white'} />
+                ),
+
+            },
+        },
+        MapM: {
+            screen: MapScreenMotorista,
+            navigationOptions: {
+                drawerLabel: 'Mapa Motorista',
                 drawerIcon: ({ focused }) => (
                     <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'white'} />
                 ),
@@ -167,6 +179,12 @@ const LeftDrawer = createDrawerNavigator(
                 ),
             }
         },
+        ProfileP: {
+            screen: PassageiroScreen,
+            navigationOptions: {
+                drawerLabel: <Hidden />
+            }
+        }
     },
     {
         contentOptions: {
@@ -194,34 +212,17 @@ const RightDrawer = createDrawerNavigator(
 );
 
 const AuthStack = createStackNavigator({
-    Home: {
-        screen: HomeScreen,
+    Login: {
+        screen: LoginScreen,
         navigationOptions: {
             headerShown: false
         }
     },
-    LoginM: {
-        screen: LoginMotoristaScreen,
+    Cadastro: {
+        screen: CadastroScreen,
         navigationOptions: {
-            title: 'Login Motorista'
-        },
-    },
-    LoginP: {
-        screen: LoginPassageiro,
-        navigationOptions: {
-            title: 'Login Passageiro'
-        },
-    },
-    CadastroMotorista: {
-        screen: CadastroMotoristaScreen,
-        navigationOptions: {
-            title: 'Cadastro Motorista'
-        },
-    },
-    CadastroPassageiro: {
-        screen: CadastroPassageiroScreen,
-        navigationOptions: {
-            title: 'Cadastro Passageiro'
+            title: 'Cadastro',
+            headerShown: false
         },
     },
 })
@@ -253,6 +254,10 @@ class AuthLoadingScreen extends Component {
     _loadData = async () => {
         const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         this.props.navigation.navigate(!isLoggedIn !== '1' ? 'Auth' : 'App')
+    }
+
+    _loadTipo = async () => {
+        const tipo = await AsyncStorage.getItem('Tipo')
     }
 
 }

@@ -19,22 +19,7 @@ export default class HomeScreen extends Component {
                         color="black"
                         size={35}
                         style={styles.addIcon}
-                    />
-
-                    <View style={{
-                        justifyContent: 'space-around'
-                    }}>
-
-                        <CheckBox
-                            value={this.state.checked}
-                            uncheckedColor={"ligthgray"}
-                            onValueChange={() => this.setState({ checked: !this.state.checked })}
-                            style={{ marginLeft: "5%", marginTop: 10 }}
-                        />
-                        <Text style={{ color: "lightgray", paddingLeft: "20%", paddingTop: 0 }}>Lembrar-me!</Text>
-                        <Text style={{ color: "lightgray", paddingLeft: "50%", paddingTop: 0 }}>Esqueceu sua senha?</Text>
-
-                    </View>
+                    />                   
                 </SafeAreaView>
             </View>
         );

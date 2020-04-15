@@ -13,7 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RadioButton } from 'react-native-paper';
 
-const userInfo = { username: 'Admin', password: "123" }
+const userInfo = { username: '', password: "" }
 
 export default class HomeScreen extends Component {
 
@@ -21,18 +21,18 @@ export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
+            userInfo: {
+                email: '',
+                password: '',
+            },
+            accountOption: {
+                checkedRadio: '',
+            },
         }
     }
 
-    state = {
-        checkedRadio: 'motorista',
-    };
 
     render() {
-        const { checkedRadio } = this.state;
-
         return (
             <View style={styles.container}>
                 <SafeAreaView style={{ flex: 1 }}>
@@ -81,16 +81,16 @@ export default class HomeScreen extends Component {
                                     value="motorista"
                                     color="lightgray"
                                     uncheckedColor="lightgray"
-                                    status={checkedRadio === 'motorista' ? 'checked' : 'unchecked'}
-                                    onPress={() => { this.setState({ checkedRadio: 'motorista' }); }}
+                                    status={this.state.accountOption.checkedRadio === 'motorista' ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ accountOption: { checkedRadio: 'motorista' } }); }}
                                 />
                                 <Text style={{ paddingTop: 8, color: "lightgray" }}>Motorista</Text>
                                 <RadioButton
                                     value="passageiro"
                                     color="lightgray"
                                     uncheckedColor="lightgray"
-                                    status={checkedRadio === 'passageiro' ? 'checked' : 'unchecked'}
-                                    onPress={() => { this.setState({ checkedRadio: 'passageiro' }); }}
+                                    status={this.state.accountOption.checkedRadio === 'passageiro' ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ accountOption: { checkedRadio: 'passageiro' } }); }}
                                 />
                                 <Text style={{ paddingTop: 8, color: "lightgray" }}>Passageiro</Text>
                             </View>
@@ -121,14 +121,14 @@ export default class HomeScreen extends Component {
     }
 
     _cadastrar = async () => {
-        if (checkedRadio === 'motorista') {
+        if (this.state.accountOption.checkedRadio === 'motorista') {
             if (userInfo.username === this.state.username && userInfo.password === this.state.password) {
                 await AsyncStorage.setItem('isLoggedIn', '1');
                 this.props.navigation.navigate('Map');
             } else {
                 alert('Usuario ou senha incorreta!');
             }
-        } else if (checkedRadio === 'passageiro') {
+        } else if (this.state.accountOption.checkedRadio === 'passageiro') {
             if (userInfo.username === this.state.username && userInfo.password === this.state.password) {
                 await AsyncStorage.setItem('isLoggedIn', '2');
                 this.props.navigation.navigate('Map');
@@ -136,7 +136,7 @@ export default class HomeScreen extends Component {
                 alert('Usuario ou senha incorreta!');
             }
         } else {
-            Alert.alert('Error', 'Escolha o tipo da conta!')
+            Alert.alert('Erro ao cadastrar!', 'Preencha todos os campos!')
         }
     }
 }

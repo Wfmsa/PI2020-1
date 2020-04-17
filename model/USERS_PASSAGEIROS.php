@@ -7,7 +7,7 @@ class USERS_PASSAGEIROS extends Conexao{
 	private $nome;
 	private $email;
 	private $passwd;
-	private $celular;
+	private $telefone;
 	private $endereco_rua;
 	private $endereco_num;
 	private $endereco_bairro;
@@ -34,9 +34,9 @@ class USERS_PASSAGEIROS extends Conexao{
 	{
 		return $this->passwd;
 	}
-	function getCelular()
+	function gettelefone()
 	{
-		return $this->celular;
+		return $this->telefone;
 	}
 	function getEndereco_rua()
 	{
@@ -78,9 +78,9 @@ class USERS_PASSAGEIROS extends Conexao{
 		$this->passwd = $passwd;
 	}
 
-	function setCelular($celular)
+	function settelefone($telefone)
 	{
-		$this->celular = $celular;
+		$this->telefone = $telefone;
 	}
 	function setEndereco_rua($endereco_rua)
 	{
@@ -105,13 +105,38 @@ class USERS_PASSAGEIROS extends Conexao{
 	function insert($obj)
 	{
 		$sql =
-			"INSERT INTO USERS_PASSAGEIROS (id_motorista,Nome,Email,passwd,Celular,endereco_rua,endereco_num,endereco_bairro,cep,cidade) VALUES (:nome,:email,:celular,:endereco_rua,:endereco_num,:endereco_bairro,:cep,:cidade)";
+			"INSERT INTO 
+			USERS_PASSAGEIROS
+			(
+			id_motorista,
+			Nome,
+			email,
+			passwd,
+			telefone,
+			endereco_rua,
+			endereco_num,
+			endereco_bairro,
+			cep,
+			cidade)
+			VALUES
+			(
+			:id_motorista,
+			:nome,
+			:email,
+			password(:passwd),
+			:telefone,
+			:endereco_rua,
+			:endereco_num,
+			:endereco_bairro,
+			:cep,
+			:cidade);
+			"
 		$consulta = Conexao::prepare($sql);
 		$consulta->bindvalue('id_motorista', $obj->id_motorista);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
 		$consulta->bindvalue('passwd', $obj->passwd);
-		$consulta->bindvalue('celular', $obj->celular);
+		$consulta->bindvalue('telefone', $obj->telefone);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);
 		$consulta->bindvalue('endereco_bairro', $obj->endereco_bairro);
@@ -122,28 +147,29 @@ class USERS_PASSAGEIROS extends Conexao{
 	function UPDATE($obj, $id = null)
 	{
 		$sql =
-			"UPDATE 
-   USERS_PASSAGEIROS
-   SET
-   Id_motorista=:Id_motorista,
-    Nome = :Nome,
-    Email = :Email,
-	passwd = :passwd,
-    Celular = :Celular:,
-	endereco_rua=:endereco_rua,
-	endereco_num=:endereco_num,
-	endereco_bairro=:endereco_bairro,
-	cep=:cep,
-	cidade=:cidade,
-   WHERE 
-	id = :id;";
-	
+
+		"UPDATE 
+		USERS_PASSAGEIROS
+		SET
+		Id_motorista=:id_motorista,
+		 Nome =:nome,
+		 Email =:email ,
+		 passwd = password(:passwd),
+		 telefone =:telefone,
+		 endereco_rua=:endereco_rua,
+		 endereco_num=:endereco_num,
+		 endereco_bairro=:endereco_bairro,
+		 cep=:cep,
+		 cidade=:cidade
+		WHERE 
+		 id = :id;
+		 "
 		$consulta = Conexao::prepare($sql);
 		$consulta->bindvalue('id_motorista', $obj->id_motorista);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
 		$consulta->bindvalue('passwd', $obj->passwd);
-		$consulta->bindvalue('celular', $obj->celular);
+		$consulta->bindvalue('telefone', $obj->telefone);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);
 		$consulta->bindvalue('endereco_bairro', $obj->endereco_bairro);

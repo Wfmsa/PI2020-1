@@ -7,6 +7,7 @@ class USERS_MOTORISTA extends conexao
 	private $id;
 	private $nome;
 	private $email;
+	private $passwd;
 	private $celular;
 	private $endereco_rua;
 	private $endereco_num;
@@ -27,6 +28,10 @@ class USERS_MOTORISTA extends conexao
 	function getEmail()
 	{
 		return $this->email;
+	}
+	function getPasswd()
+	{
+		return $this->passwd;
 	}
 	function getCelular()
 	{
@@ -63,6 +68,11 @@ class USERS_MOTORISTA extends conexao
 		$this->email = $email;
 	}
 
+	function setPasswd($passwd)
+	{
+		$this->passwd = $passwd;
+	}
+
 	function setCelular($celular)
 	{
 		$this->celular = $celular;
@@ -90,10 +100,11 @@ class USERS_MOTORISTA extends conexao
 	function insert($obj)
 	{
 		$sql =
-			"INSERT INTO USERS_MOTORISTA (nome,email,celular,endereco_rua,endereco_num,endereco_bairro,cep,cidade) VALUES (:nome,:email,:celular,:endereco_rua,:endereco_num,:endereco_bairro,:cep,:cidade)";
+			"INSERT INTO USERS_MOTORISTA (nome,email,passwd,celular,endereco_rua,endereco_num,endereco_bairro,cep,cidade) VALUES (:nome,:email,:celular,:endereco_rua,:endereco_num,:endereco_bairro,:cep,:cidade)";
 		$consulta = Conexao::prepare($sql);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
+		$consulta->bindvalue('passwd', $obj->passwd);
 		$consulta->bindvalue('celular', $obj->celular);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);
@@ -110,6 +121,7 @@ class USERS_MOTORISTA extends conexao
    SET
     Nome = :Nome,
     Email = :Email,
+	passwd = :passwd,
     Celular = :Celular:,
 	endereco_rua=:endereco_rua,
 	endereco_num=:endereco_num,
@@ -122,6 +134,7 @@ class USERS_MOTORISTA extends conexao
 		$consulta = Conexao::prepare($sql);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
+		$consulta->bindvalue('passwd', $obj->passwd);
 		$consulta->bindvalue('celular', $obj->celular);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);

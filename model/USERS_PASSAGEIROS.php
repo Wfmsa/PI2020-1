@@ -6,6 +6,7 @@ class USERS_PASSAGEIROS extends Conexao{
 	private $id_motorista;
 	private $nome;
 	private $email;
+	private $passwd;
 	private $celular;
 	private $endereco_rua;
 	private $endereco_num;
@@ -28,6 +29,10 @@ class USERS_PASSAGEIROS extends Conexao{
 	function getEmail()
 	{
 		return $this->email;
+	}
+	function getPasswd()
+	{
+		return $this->passwd;
 	}
 	function getCelular()
 	{
@@ -68,6 +73,11 @@ class USERS_PASSAGEIROS extends Conexao{
 		$this->email = $email;
 	}
 
+	function setPasswd($passwd)
+	{
+		$this->passwd = $passwd;
+	}
+
 	function setCelular($celular)
 	{
 		$this->celular = $celular;
@@ -95,11 +105,12 @@ class USERS_PASSAGEIROS extends Conexao{
 	function insert($obj)
 	{
 		$sql =
-			"INSERT INTO USERS_PASSAGEIROS (id_motorista,Nome,Email,Celular,endereco_rua,endereco_num,endereco_bairro,cep,cidade) VALUES (:nome,:email,:celular,:endereco_rua,:endereco_num,:endereco_bairro,:cep,:cidade)";
+			"INSERT INTO USERS_PASSAGEIROS (id_motorista,Nome,Email,passwd,Celular,endereco_rua,endereco_num,endereco_bairro,cep,cidade) VALUES (:nome,:email,:celular,:endereco_rua,:endereco_num,:endereco_bairro,:cep,:cidade)";
 		$consulta = Conexao::prepare($sql);
 		$consulta->bindvalue('id_motorista', $obj->id_motorista);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
+		$consulta->bindvalue('passwd', $obj->passwd);
 		$consulta->bindvalue('celular', $obj->celular);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);
@@ -117,6 +128,7 @@ class USERS_PASSAGEIROS extends Conexao{
    Id_motorista=:Id_motorista,
     Nome = :Nome,
     Email = :Email,
+	passwd = :passwd,
     Celular = :Celular:,
 	endereco_rua=:endereco_rua,
 	endereco_num=:endereco_num,
@@ -130,6 +142,7 @@ class USERS_PASSAGEIROS extends Conexao{
 		$consulta->bindvalue('id_motorista', $obj->id_motorista);
 		$consulta->bindvalue('nome', $obj->nome);
 		$consulta->bindvalue('email', $obj->email);
+		$consulta->bindvalue('passwd', $obj->passwd);
 		$consulta->bindvalue('celular', $obj->celular);
 		$consulta->bindvalue('endereco_rua', $obj->endereco_rua);
 		$consulta->bindvalue('endereco_num', $obj->endereco_num);

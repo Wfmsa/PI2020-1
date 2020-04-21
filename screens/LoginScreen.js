@@ -15,6 +15,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
 
+import * as UsuarioApi from '../utils/apis/UsuariosAPI';
+
 const userInfo = { email: '', password: "" }
 
 export default class HomeScreen extends Component {
@@ -23,10 +25,8 @@ export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: {
-        email: '',
-        password: '',
-      },
+      nome: '',
+      passwd: '',
       accountOption: {
         checkedRadio: '',
       },
@@ -68,8 +68,8 @@ export default class HomeScreen extends Component {
           <TextInput
             style={styles.input}
             placeholder="Digite seu e-mail."
-            onChangeText={(email) => this.setState({ userInfo: { email } })}
-            value={this.state.email}
+            onChangeText={(nome) => this.setState({ nome })}
+            value={this.state.nome}
             autoCapitalize="none"
           />
           <Text style={styles.text}>Senha:</Text>
@@ -77,8 +77,8 @@ export default class HomeScreen extends Component {
             style={styles.input}
             placeholder="Digite sua senha"
             secureTextEntry
-            onChangeText={(password) => this.setState({ userInfo: { password } })}
-            value={this.state.password}
+            onChangeText={(passwd) => this.setState({ passwd })}
+            value={this.state.passwd}
           />
 
           <View style={{
@@ -128,7 +128,7 @@ export default class HomeScreen extends Component {
           <View style={{ marginTop: "10%" }}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={this._login}>
+              onPress={() => this.validaLogin()}>
               <Text style={{ color: "lightgray" }}>Login</Text>
             </TouchableOpacity>
             <View style={{ flexDirection: "row", justifyContent: "center", paddingTop: "1%" }}>
@@ -143,6 +143,16 @@ export default class HomeScreen extends Component {
         </KeyboardAvoidingView >
       </ScrollView>
     );
+  }
+
+  async validaLogin() {
+    const { nome, passwd } = this.state;
+    const userInfo = { nome, passwd };
+
+    const isValid = await UsuarioApi.consultar(userInfo);
+
+    if(isValid)
+    this.props.navigation.navigate('MapM');
   }
 
   _login = async () => {

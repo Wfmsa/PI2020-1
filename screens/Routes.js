@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Dimensions,
     View,
     TouchableOpacity,
     SafeAreaView, ScrollView,
@@ -23,6 +22,7 @@ import CadastroScreen from './CadastroScreen';
 import RotasScreen from './RotasScreen';
 import PassageiroScreen from './PassageiroScreen';
 import MapScreenMotorista from './MapScreenMotorista';
+import RightDrawerTab from '../components/Tabs/RightDrawerTab';
 
 
 
@@ -65,77 +65,9 @@ const CustomDrawerComponent = (props) => (
     </SafeAreaView>
 )
 
-const RightCustomDrawerComponent = (props) => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
-        <ScrollView>
-            <DrawerItems {...props} />
-            <Text style={styles.text}>Confirmados - 1</Text>
-            <View style={{ flexDirection: "row", }}>
-                <Ionicons name="md-contact" size={50}
-                    style={{
-                        paddingTop: 5,
-                        marginLeft: 19,
-                    }}
-                    color="lightgray" />
-                <View style={{
-                    width: 15,
-                    height: 15,
-                    borderRadius: 15 / 2,
-                    borderWidth: 2,
-                    borderColor: '#303030',
-                    backgroundColor: "lime",
-                    marginTop: 35,
-                    marginLeft: 45,
-                    position: 'absolute',
-                    overflow: "hidden"
-                }} />
-                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Caio</Text>
-            </View>
-            <Text style={styles.text}>Negados - 1</Text>
-            <View style={{ flexDirection: "row", }}>
-                <Ionicons name="md-contact" size={50}
-                    style={{
-                        paddingTop: 5,
-                        marginLeft: 19,
-                    }}
-                    color="lightgray" />
-                <View style={{
-                    width: 15,
-                    height: 15,
-                    borderRadius: 15 / 2,
-                    borderWidth: 2,
-                    borderColor: '#303030',
-                    backgroundColor: "red",
-                    marginTop: 35,
-                    marginLeft: 45,
-                    position: 'absolute',
-                    overflow: "hidden"
-                }} />
-                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Diego</Text>
-            </View>
-            <Text style={styles.text}>Aguardando - 1</Text>
-            <View style={{ flexDirection: "row", }}>
-                <Ionicons name="md-contact" size={50}
-                    style={{
-                        paddingTop: 5,
-                        marginLeft: 19,
-                    }}
-                    color="lightgray" />
-                <View style={{
-                    width: 15,
-                    height: 15,
-                    borderRadius: 15 / 2,
-                    borderWidth: 2,
-                    borderColor: '#303030',
-                    backgroundColor: "orange",
-                    marginTop: 33,
-                    marginLeft: 43,
-                    position: 'absolute',
-                    overflow: "hidden"
-                }} />
-                <Text style={{ color: "lightgray", paddingTop: 15, marginLeft: 30, fontWeight: 'bold', fontSize: 20 }}>Pedro</Text>
-            </View>
-        </ScrollView>
+const RightCustomDrawerComponent = () => (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>               
+            <RightDrawerTab />    
     </SafeAreaView>
 )
 
@@ -293,12 +225,3 @@ export default createAppContainer(createSwitchNavigator(
         initialRouteName: 'AuthLoading'
     }
 ));
-
-const styles = StyleSheet.create({
-    text: {
-        color: "lightgray",
-        marginLeft: 19,
-        fontSize: 15,
-        fontWeight: "bold"
-    }
-})

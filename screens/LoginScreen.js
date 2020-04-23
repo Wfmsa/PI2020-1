@@ -14,12 +14,10 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
-
 import * as UsuarioApi from '../utils/apis/UsuariosAPI';
 
-const userInfo = { email: '', password: "" }
 
-export default class HomeScreen extends Component {
+export default class HomeScreen extends React.Component {
 
 
   constructor(props) {
@@ -56,7 +54,7 @@ export default class HomeScreen extends Component {
             <TouchableOpacity
               style={styles.iconP}
               activeOpacity={0.5}
-            >
+              onPress={() => { this.props.navigation.navigate('MapP') }}>
               <Ionicons name="logo-google" color="orange" size={30} />
             </TouchableOpacity>
           </View>
@@ -151,30 +149,24 @@ export default class HomeScreen extends Component {
 
     const isValid = await UsuarioApi.consultar(userInfo);
 
-    if(isValid)
-    this.props.navigation.navigate('MapM');
-  }
-
-  _login = async () => {
     if (this.state.accountOption.checkedRadio === "motorista") {
-      if (userInfo.email === this.state.userInfo.email && userInfo.password === this.state.userInfo.password) {
-        await AsyncStorage.setItem('isLoggedIn', '1');
-        await AsyncStorage.setItem('Tipo', 'M');
+
+      if (isValid) {
         this.props.navigation.navigate('MapM');
       } else {
+        await AsyncStorage.setItem('isLoggedIn', '1');
         Alert.alert("Login", "Email ou senha incorreta!")
       }
-    } else if (this.state.accountOption.checkedRadio === "passageiro") {
-      if (userInfo.email === this.state.userInfo.email && userInfo.password === this.state.userInfo.password) {
-        await AsyncStorage.setItem('isLoggedIn', '1');
-        await AsyncStorage.setItem('Tipo', 'P');
 
+    } else if (this.state.accountOption.checkedRadio === "passageiro") {
+      if (isValid) {
         this.props.navigation.navigate('MapP');
       } else {
+        await AsyncStorage.setItem('isLoggedIn', '1');
         Alert.alert("Login", "Email ou senha incorreta!")
       }
     } else {
-      Alert.alert("Login", "Escolha o tipo da conta!")
+      Alert.alert("Login", "Escolha o tipo conta!")
     }
   }
 };

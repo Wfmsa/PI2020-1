@@ -1,9 +1,11 @@
 import * as React from 'react';
-
-import Navigator from './screens/Routes';
+import DrawerNavigator from './screens/Routes';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App(props) {
   return (
-    <Navigator />
+    <SafeAreaProvider>
+      <DrawerNavigator />
+    </SafeAreaProvider>
   );
 }

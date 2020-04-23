@@ -1,95 +1,63 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import MapView from 'react-native-maps';
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Image,
-  SafeAreaView,
-} from 'react-native';
-import MenuButton from '../components/Tabs/MenuButton';
-import MoreButton from '../components/Tabs/MoreButton';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 
 
 export default class MapScreen extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      region: {
-        latitude: null,
-        longitude: null,
-        latitudeDelta: 0.0143,
-        longitudeDelta: 0.0134,
-      }
-    }
+  state = {
+    latitude: null,
+    longitude: null,
   }
 
+  //Função para pegar a posição atual da pessoa e definir no State.
   async componentDidMount() {
+      
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          region: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0,
-          }
-        });
-      },
-      (error) => {
-        console.warn(error.code, error.message);
-      },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      ({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
+      (error) => console.log('Error:', error)
     )
-  }
 
-  onRegionChange(region) {
-    this.setState({
-      region: region
-    });
   }
-
   render() {
+    //Pega as informaçoes do State para utilizar no initialRegion.
+    const { latitude, longitude } = this.state
 
-
-    if (this.state.region.latitude) {
+    if (latitude) {
       return (
-        <SafeAreaView style={styles.container}>
-          <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
-          <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
+        <View style={styles.mapView}>
           <MapView
             style={styles.map}
-            region={this.state.region}
-            showsUserLocation={true}
-            onRegionChangeCompletee={region => {
-              this.setState({ region });
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.0143,
+              longitudeDelta: 0.0134,              
             }}
+            showsUserLocation
             rotateEnabled={false}
           />
-          <View style={styles.mapDrawerOverlay} />
-          <View style={styles.mapDrawerOverlayRight} />
-        </SafeAreaView>
+        </View>
       );
     }
     return (
-      <View style={styles.icon} >
+      <View style={styles.container}>
         <Image
           source={require('../assets/images/van.png')}
           style={styles.image}
         />
       </View>
     )
-  }
 
+  }
 }
 
 const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'black'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   image: {
     width: 100,
@@ -99,32 +67,14 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    height: '90%',
+    flex: 1
   },
   mapView: {
     flex: 1,
-  },
-  icon: {
-    flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: "#303030"
-  },
-  mapDrawerOverlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    opacity: 0.0,
-    height: Dimensions.get('window').height,
-    width: 20,
-  },
-  mapDrawerOverlayRight: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    opacity: 0.0,
-    height: Dimensions.get('window').height,
-    width: 20,
-  },
+    justifyContent: 'center',
+  }
 })

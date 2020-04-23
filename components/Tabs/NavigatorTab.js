@@ -1,23 +1,18 @@
 import React from 'react';
-import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-export default function NavigatorTab({ leftBtn, rightBtn }) {
-    return (
-        <View style={styles.main}>
-            <TouchableOpacity style={styles.btn} onPress={leftBtn}>
-                <Text style={styles.txt}>Início</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity style={styles.btn} onPress={rightBtn}>
-                <Text style={styles.txt}>Mapa</Text>
-            </TouchableOpacity>
-        </View>
-    );
+export default function NavigatorTab({leftBtn, rightBtn}) {
+  return (
+    <View style={styles.main}>
+        <TouchableOpacity style={styles.btn} onPress={leftBtn}>
+            <Text style={styles.txt}>Início</Text>
+        </TouchableOpacity>
+        <View style={styles.divider}/>
+        <TouchableOpacity style={styles.btn} onPress={rightBtn}>
+            <Text style={styles.txt}>Mapa</Text>
+        </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

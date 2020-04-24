@@ -13,16 +13,23 @@ import { FlatList } from 'react-native-gesture-handler';
 export default class HomeScreen extends Component {
 
     state = {
-        data: []
+        info: '',
+        confirmados: '',
+        ausentes: '',
+        aguardando: '',
     }
     async fetchData() {
         const dado = await UsuarioApi.passageiros()
-        this.setState({ data: dado })
-        console.log(dado)
+        this.setState({ info: dado })
+
+
+        this.setState({ confirmados: this.state.info.filter(item => item.status == 1) })
+        this.setState({ ausentes: this.state.info.filter(item => item.status == 2) })
+        this.setState({ aguardando: this.state.info.filter(item => item.status == 0) })
     }
 
     componentDidMount() {
-        this.fetchData()
+        this.fetchData();
     }
 
     render() {
@@ -30,7 +37,7 @@ export default class HomeScreen extends Component {
             <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
                 <Text style={styles.text}>Confirmados - </Text>
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.confirmados}
                     renderItem={({ item }) =>
                         <View style={{ flexDirection: "row" }}>
                             <Ionicons name="md-contact" size={50}
@@ -59,7 +66,7 @@ export default class HomeScreen extends Component {
 
                 <Text style={styles.text}>Ausentes - </Text>
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.ausentes}
                     renderItem={({ item }) =>
                         <View style={{ flexDirection: "row" }}>
                             <Ionicons name="md-contact" size={50}
@@ -87,7 +94,7 @@ export default class HomeScreen extends Component {
                 />
                 <Text style={styles.text}>Aguardando - </Text>
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.aguardando}
                     renderItem={({ item }) =>
                         <View style={{ flexDirection: "row" }}>
                             <Ionicons name="md-contact" size={50}

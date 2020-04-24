@@ -9,7 +9,6 @@ import {
     AsyncStorage,
     ActivityIndicator,
     StatusBar,
-    StyleSheet
 } from "react-native";
 import { createDrawerNavigator, DrawerItems, DrawerActions } from 'react-navigation-drawer';
 import { createAppContainer, createSwitchNavigator, } from 'react-navigation';
@@ -66,8 +65,10 @@ const CustomDrawerComponent = (props) => (
 )
 
 const RightCustomDrawerComponent = () => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>               
-            <RightDrawerTab />    
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
+        <ScrollView>
+            <RightDrawerTab />
+        </ScrollView>
     </SafeAreaView>
 )
 

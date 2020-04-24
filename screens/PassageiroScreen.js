@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
-import MenuButton from "../components/Tabs/MenuButton";
-
 
 export default class PassageiroScreen extends React.Component {
 

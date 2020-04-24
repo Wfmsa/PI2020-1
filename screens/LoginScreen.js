@@ -144,12 +144,10 @@ export default class HomeScreen extends React.Component {
   }
 
   async validaLogin() {
-    const { nome, passwd } = this.state;
-    const userInfo = { nome, passwd };
-
-    const isValid = await UsuarioApi.consultar(userInfo);
-
     if (this.state.accountOption.checkedRadio === "motorista") {
+      const { nome, passwd } = this.state;
+      const userInfo = { nome, passwd };
+      const isValid = await UsuarioApi.loginMotorista(userInfo);
 
       if (isValid) {
         this.props.navigation.navigate('MapM');
@@ -159,12 +157,18 @@ export default class HomeScreen extends React.Component {
       }
 
     } else if (this.state.accountOption.checkedRadio === "passageiro") {
+
+      const { nome, passwd } = this.state;
+      const userInfo = { nome, passwd };
+      const isValid = await UsuarioApi.loginPassageiro(userInfo);
+
       if (isValid) {
         this.props.navigation.navigate('MapP');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');
         Alert.alert("Login", "Email ou senha incorreta!")
       }
+
     } else {
       Alert.alert("Login", "Escolha o tipo conta!")
     }

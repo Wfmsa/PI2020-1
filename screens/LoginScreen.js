@@ -15,6 +15,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
 import * as UsuarioApi from '../utils/apis/UsuariosAPI';
+import * as UsuarioRepositorio from '../repositorios/UsuarioRepositorio';
 
 
 export default class HomeScreen extends React.Component {
@@ -147,9 +148,10 @@ export default class HomeScreen extends React.Component {
     if (this.state.accountOption.checkedRadio === "motorista") {
       const { nome, passwd } = this.state;
       const userInfo = { nome, passwd };
-      const isValid = await UsuarioApi.loginMotorista(userInfo);
+      const dadosUsuario = await UsuarioApi.loginMotorista(userInfo);
 
-      if (isValid) {
+      if (dadosUsuario) {
+        UsuarioRepositorio.salvar(dadosUsuario);
         this.props.navigation.navigate('MapM');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');
@@ -160,9 +162,11 @@ export default class HomeScreen extends React.Component {
 
       const { nome, passwd } = this.state;
       const userInfo = { nome, passwd };
-      const isValid = await UsuarioApi.loginPassageiro(userInfo);
+      const dadosUsuario = await UsuarioApi.loginPassageiro(userInfo);
 
-      if (isValid) {
+      if (dadosUsuario) {
+        UsuarioRepositorio.salvar(dadosUsuario);
+        console.log(JSON.stringify(dadosUsuario,undefined,2))
         this.props.navigation.navigate('MapP');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');

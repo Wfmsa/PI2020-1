@@ -1,6 +1,12 @@
 import { AsyncStorage } from 'react-native';
 const key = 'Usuario';
 
+export async function limpar() {
+  AsyncStorage
+    .removeItem(key)
+    .done();
+}
+
 export async function salvar(dados) {
   
   AsyncStorage

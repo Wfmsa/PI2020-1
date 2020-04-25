@@ -151,6 +151,7 @@ export default class HomeScreen extends React.Component {
       const dadosUsuario = await UsuarioApi.loginMotorista(userInfo);
 
       if (dadosUsuario) {
+        UsuarioRepositorio.limpar();
         UsuarioRepositorio.salvar(dadosUsuario);
         this.props.navigation.navigate('MapM');
       } else {
@@ -165,6 +166,7 @@ export default class HomeScreen extends React.Component {
       const dadosUsuario = await UsuarioApi.loginPassageiro(userInfo);
 
       if (dadosUsuario) {
+        UsuarioRepositorio.limpar();
         UsuarioRepositorio.salvar(dadosUsuario);
         console.log(JSON.stringify(dadosUsuario,undefined,2))
         this.props.navigation.navigate('MapP');

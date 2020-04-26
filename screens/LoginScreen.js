@@ -55,7 +55,7 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity
               style={styles.iconP}
               activeOpacity={0.5}
-              onPress={() => { this.props.navigation.navigate('MapP') }}>
+              onPress={() => { this.props.navigation.navigate('Map') }}>
               <Ionicons name="logo-google" color="orange" size={30} />
             </TouchableOpacity>
           </View>
@@ -153,7 +153,7 @@ export default class HomeScreen extends React.Component {
       if (dadosUsuario) {
         UsuarioRepositorio.limpar();
         UsuarioRepositorio.salvar(dadosUsuario);
-        this.props.navigation.navigate('MapM');
+        this.props.navigation.navigate('Map');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');
         Alert.alert("Login", "Email ou senha incorreta!")
@@ -169,7 +169,7 @@ export default class HomeScreen extends React.Component {
         UsuarioRepositorio.limpar();
         UsuarioRepositorio.salvar(dadosUsuario);
         console.log(JSON.stringify(dadosUsuario,undefined,2))
-        this.props.navigation.navigate('MapP');
+        this.props.navigation.navigate('Map');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');
         Alert.alert("Login", "Email ou senha incorreta!")

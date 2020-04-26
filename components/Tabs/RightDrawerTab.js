@@ -4,11 +4,9 @@ import {
     View,
     Text,
 } from 'react-native';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as UsuarioApi from '../../utils/apis/UsuariosAPI';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import * as UsuarioRepositorio from '../../repositorios/UsuarioRepositorio';
 
 
@@ -80,7 +78,7 @@ export default class RightDrawerTab extends Component {
 
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
+            <ScrollView style={{ flex: 1, backgroundColor: "#353535" }}>
                 <Status />
                 <View style={{ flexDirection: "row" }}>
                     <Text style={styles.text}>Confirmados - </Text>
@@ -171,7 +169,7 @@ export default class RightDrawerTab extends Component {
                         </View>
                     }
                 />
-            </SafeAreaView>
+            </ScrollView>
         );
     }
 

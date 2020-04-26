@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
+import * as UsuarioRepositorio from "../repositorios/UsuarioRepositorio";
 
 
 export default class MapScreen extends React.Component {
@@ -22,11 +23,17 @@ export default class MapScreen extends React.Component {
         longitude: null,
         latitudeDelta: 0.0143,
         longitudeDelta: 0.0134,
-      }
+      },
+      data: '',
     }
   }
 
-  async componentDidMount() {
+  async fetchData() {
+    const dados = await UsuarioRepositorio.buscarTodos()
+    this.setState({ data: dados[0] })
+  }
+
+  async map() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -45,6 +52,11 @@ export default class MapScreen extends React.Component {
     )
   }
 
+  componentDidMount() {
+    this.map()
+    this.fetchData()
+  }
+
   onRegionChange(region) {
     this.setState({
       region: region
@@ -55,12 +67,31 @@ export default class MapScreen extends React.Component {
 
 
     if (this.state.region.latitude) {
+      if (this.state.data.tipo !== 0) {
+        return (
+          <SafeAreaView style={styles.container}>
+            <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
+            <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
+            <MapView
+              style={styles.map}
+              region={this.state.region}
+              showsUserLocation={true}
+              onRegionChangeCompletee={region => {
+                this.setState({ region });
+              }}
+              rotateEnabled={false}
+            />
+            <View style={styles.mapDrawerOverlay} />
+            <View style={styles.mapDrawerOverlayRight} />
+          </SafeAreaView>
+        );
+      }
       return (
         <SafeAreaView style={styles.container}>
           <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
           <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
           <MapView
-            style={styles.map}
+            style={styles.mapM}
             region={this.state.region}
             showsUserLocation={true}
             onRegionChangeCompletee={region => {
@@ -71,7 +102,7 @@ export default class MapScreen extends React.Component {
           <View style={styles.mapDrawerOverlay} />
           <View style={styles.mapDrawerOverlayRight} />
         </SafeAreaView>
-      );
+      )
     }
     return (
       <View style={styles.icon} >
@@ -102,8 +133,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: "100%",
   },
-  mapView: {
-    flex: 1,
+  mapM: {
+    width: Dimensions.get("window").width,
+    height: "100%",
   },
   icon: {
     flex: 1,

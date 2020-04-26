@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {
     View,
-    TouchableOpacity,
-    SafeAreaView, ScrollView,
-    Text,
-    Alert,
     Image,
     AsyncStorage,
     ActivityIndicator,
     StatusBar,
 } from "react-native";
-import { createDrawerNavigator, DrawerItems, DrawerActions } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer';
 import { createAppContainer, createSwitchNavigator, } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -19,8 +15,7 @@ import LoginScreen from './LoginScreen';
 import MapScreen from './MapScreen';
 import CadastroScreen from './CadastroScreen';
 import RotasScreen from './RotasScreen';
-import PassageiroScreen from './PassageiroScreen';
-import MapScreenMotorista from './MapScreenMotorista';
+import ProfileScreen from './ProfileScreen';
 import RightDrawerTab from '../components/Tabs/RightDrawerTab';
 import LeftDrawerTab from '../components/Tabs/LeftDrawerTab';
 
@@ -32,59 +27,12 @@ class Hidden extends React.Component {
     }
 }
 
-const CustomDrawerComponent = (props) => (
-
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
-        <LeftDrawerTab />
-        <ScrollView>
-            <DrawerItems {...props} />
-            <TouchableOpacity style={{ flexDirection: "row" }} onPress={() =>
-                Alert.alert(
-                    'Sair',
-                    'Você deseja sair da sua conta?',
-                    [
-                        { text: 'Cancelar', onPress: () => { return null } },
-                        {
-                            text: 'Confirmar', onPress: () => {
-                                AsyncStorage.clear();
-                                props.navigation.navigate('Login')
-                            }
-                        },
-                    ],
-                    { cancelable: false }
-                )
-            }>
-                <Ionicons name="md-log-out" size={24} style={{ paddingTop: 5, marginLeft: 19 }} color="lightgray" />
-                <Text style={{ color: "lightgray", paddingTop: 7, marginLeft: 34, fontWeight: 'bold', }}>Sair</Text>
-            </TouchableOpacity>
-        </ScrollView>
-    </SafeAreaView>
-)
-
-const RightCustomDrawerComponent = () => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
-        <ScrollView>
-            <RightDrawerTab />
-        </ScrollView>
-    </SafeAreaView>
-)
-
 const LeftDrawer = createDrawerNavigator(
     {
-        MapP: {
+        Map: {
             screen: MapScreen,
             navigationOptions: {
                 drawerLabel: 'Mapa',
-                drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'white'} />
-                ),
-
-            },
-        },
-        MapM: {
-            screen: MapScreenMotorista,
-            navigationOptions: {
-                drawerLabel: 'Mapa Motorista',
                 drawerIcon: ({ focused }) => (
                     <Ionicons name="md-map" size={24} color={focused ? 'orange' : 'white'} />
                 ),
@@ -109,8 +57,8 @@ const LeftDrawer = createDrawerNavigator(
                 ),
             }
         },
-        ProfileP: {
-            screen: PassageiroScreen,
+        Profile: {
+            screen: ProfileScreen,
             navigationOptions: {
                 drawerLabel: <Hidden />
             }
@@ -141,7 +89,7 @@ const RightDrawer = createDrawerNavigator(
     },
     {
         drawerPosition: 'right',
-        contentComponent: RightCustomDrawerComponent,
+        contentComponent: RightDrawerTab,
         getCustomActionCreators: (route, stateKey) => {
             return {
                 toggleRightDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),

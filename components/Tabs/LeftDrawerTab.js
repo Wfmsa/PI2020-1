@@ -41,23 +41,21 @@ export default class LeftDrawerTan extends Component {
 
 
     render() {
-        console.log(this.state.screen)
-
         if (this.state.data.tipo !== 0) {
             return (
                 <SafeAreaView style={{ backgroundColor: "#353535", flex: 1 }}>
                     <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
-                        <TouchableOpacity onPress={this.navigateToScreen('ProfileP')}>
+                        <TouchableOpacity onPress={this.navigateToScreen('Profile')}>
                             <Ionicons name="md-contact" size={80} color="lightgray" />
                             <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>{this.state.data.Nome}</Text>
                         </TouchableOpacity>
 
                     </View>
                     <ScrollView>
-                        <TouchableOpacity onPress={this.navigateToScreen('MapP')} style={styles.container}>
+                        <TouchableOpacity onPress={this.navigateToScreen('Map')} style={styles.container}>
                             <Ionicons name="md-map" size={24} style={styles.icon} color="lightgray" />
                             <Text style={styles.text}>Mapa</Text>
-                        </TouchableOpacity>                        
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={this.navigateToScreen('Settings')} style={{ flexDirection: "row" }}>
                             <Ionicons name="md-settings" size={24} style={styles.icon} color="lightgray" />
                             <Text style={styles.text}>Configurações</Text>
@@ -89,14 +87,14 @@ export default class LeftDrawerTan extends Component {
         return (
             <SafeAreaView style={{ backgroundColor: "#353535", flex: 1 }}>
                 <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
-                    <TouchableOpacity onPress={this.navigateToScreen('ProfileP')}>
+                    <TouchableOpacity onPress={this.navigateToScreen('Profile')}>
                         <Ionicons name="md-contact" size={80} color="lightgray" />
-                        <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>{this.state.data.Nome}</Text>
+                        <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>{this.state.data.nome}</Text>
                     </TouchableOpacity>
 
                 </View>
                 <ScrollView>
-                    <TouchableOpacity onPress={this.navigateToScreen('MapM')} style={styles.container}>
+                    <TouchableOpacity onPress={this.navigateToScreen('Map')} style={styles.container}>
                         <Ionicons name="md-map" size={24} style={styles.icon} color="lightgray" />
                         <Text style={styles.text}>Mapa</Text>
                     </TouchableOpacity>

@@ -22,6 +22,7 @@ import RotasScreen from './RotasScreen';
 import PassageiroScreen from './PassageiroScreen';
 import MapScreenMotorista from './MapScreenMotorista';
 import RightDrawerTab from '../components/Tabs/RightDrawerTab';
+import LeftDrawerTab from '../components/Tabs/LeftDrawerTab';
 
 
 
@@ -32,13 +33,9 @@ class Hidden extends React.Component {
 }
 
 const CustomDrawerComponent = (props) => (
+
     <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
-        <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => props.navigation.navigate('ProfileP')}>
-                <Ionicons name="md-contact" size={80} color="lightgray" />
-                <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>Nome</Text>
-            </TouchableOpacity>
-        </View>
+        <LeftDrawerTab />
         <ScrollView>
             <DrawerItems {...props} />
             <TouchableOpacity style={{ flexDirection: "row" }} onPress={() =>
@@ -124,7 +121,7 @@ const LeftDrawer = createDrawerNavigator(
             activeTintColor: 'orange',
             inactiveTintColor: 'lightgray',
         },
-        contentComponent: CustomDrawerComponent,
+        contentComponent: LeftDrawerTab,
         getCustomActionCreators: (route, stateKey) => {
             return {
                 toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),

@@ -8,9 +8,55 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as UsuarioApi from '../../utils/apis/UsuariosAPI';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import * as UsuarioRepositorio from '../../repositorios/UsuarioRepositorio';
 
-export default class HomeScreen extends Component {
+
+class Status extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            data: '',
+        }
+    }
+
+    async fetchData() {
+        const dados = await UsuarioRepositorio.buscarTodos()
+        this.setState({ data: dados[0] })
+    }
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    render() {
+
+        if (this.state.data.tipo !== 0) {
+            return (
+                <View>
+                    <Text style={styles.text}>Confirme sua presença:</Text>
+                    <View style={{ height: 80, justifyContent: "center", flexDirection: "row", paddingTop: 20 }}>
+                        <TouchableOpacity style={{ marginRight: "30%" }}>
+                            <Ionicons name="md-checkmark" size={40} color="green" />
+                        </TouchableOpacity>
+                        <TouchableOpacity >
+                            <Ionicons name="md-close" size={40} color="red" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+        return (
+
+            <View>
+
+            </View>
+        )
+
+    }
+}
+
+export default class RightDrawerTab extends Component {
 
     state = {
         info: '',
@@ -35,7 +81,13 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: "#353535" }}>
-                <Text style={styles.text}>Confirmados - </Text>
+                <Status />
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.text}>Confirmados - </Text>
+                    <TouchableOpacity style={{ marginLeft: "60%" }}>
+                        <Ionicons name="md-refresh" size={30} color="lightgray" onPress={() => this.fetchData()} />
+                    </TouchableOpacity>
+                </View>
                 <FlatList
                     data={this.state.confirmados}
                     renderItem={({ item }) =>
@@ -139,7 +191,7 @@ const styles = StyleSheet.create({
     text: {
         color: "lightgray",
         marginLeft: 19,
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: "bold"
     },
     textA: {

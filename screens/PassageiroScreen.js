@@ -8,12 +8,16 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
+import * as UsuarioRepositorio from '../repositorios/UsuarioRepositorio';
 
 export default class PassageiroScreen extends React.Component {
 
     constructor() {
         super();
-        this.state = { TextInputDisableStatus: false }
+        this.state = {
+            TextInputDisableStatus: false,
+            data: '',
+        }
     }
 
     onPressButtonEnabled = () => {
@@ -24,11 +28,20 @@ export default class PassageiroScreen extends React.Component {
         this.setState({ TextInputDisableStatus: false })
     }
 
+    async fetchData() {
+        const dados = await UsuarioRepositorio.buscarTodos()
+        this.setState({ data: dados[0] })
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
                     <Ionicons
                         name="md-menu"
                         color="lightgray"
@@ -36,55 +49,55 @@ export default class PassageiroScreen extends React.Component {
                         style={styles.menuIcon}
                         onPress={() => this.props.navigation.toggleDrawer()}
                     />
-                    <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate("PassageiroScreen") }}>
-                            <Ionicons name="md-contact" size={80} color="lightgray" />
-                        </TouchableOpacity>
-                    </View>
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder={"Codigo da Van"}
-                        editable={this.state.TextInputDisableStatus}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder={"Nome e Sobrenome"}
-                        editable={this.state.TextInputDisableStatus}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder={"Telefone"}
-                        editable={this.state.TextInputDisableStatus}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder={"Rua"}
-                        editable={this.state.TextInputDisableStatus}
-                    />
-                    <View style={{ flexDirection: "row" }}>
-                        <TextInput
-                            style={styles.input1}
-                            placeholder={"Bairro"}
-                            editable={this.state.TextInputDisableStatus}
-                        />
-                        <TextInput
-                            style={styles.input1}
-                            placeholder={"Numero"}
-                            editable={this.state.TextInputDisableStatus}
-                        />
-                    </View>
-
-                    <View style={{ alignSelf: "center", flexDirection: "row", }}>
-                        <TouchableOpacity style={styles.btns} onPress={this.onPressButtonDisabled}>
-                            <Text style={{ color: "lightgray", marginLeft: "5%" }}>Salvar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.btns} onPress={this.onPressButtonEnabled}>
-                            <Text style={{ color: "lightgray", marginLeft: "5%" }}>Editar</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate("PassageiroScreen") }}>
+                        <Ionicons name="md-contact" size={80} color="lightgray" />
+                    </TouchableOpacity>
                 </View>
-            </SafeAreaView >
+
+                <TextInput
+                    style={styles.input}
+                    placeholder={"Codigo da Van"}
+                    editable={this.state.TextInputDisableStatus}
+                />
+                <TextInput
+                    style={styles.input}
+                    value={this.state.data.Nome}
+                    editable={this.state.TextInputDisableStatus}
+                />
+                <TextInput
+                    style={styles.input}
+                    value={this.state.data && (this.state.data.telefone).toString()}
+                    editable={this.state.TextInputDisableStatus}
+                />
+                <TextInput
+                    style={styles.input}
+                    value={this.state.data.endereco_rua}
+                    editable={this.state.TextInputDisableStatus}
+                />
+                <View style={{ flexDirection: "row" }}>
+                    <TextInput
+                        style={styles.input1}
+                        value={this.state.data.endereco_bairro}
+                        editable={this.state.TextInputDisableStatus}
+                    />
+                    <TextInput
+                        style={styles.input1}
+                        value={this.state.data && (this.state.data.endereco_num).toString()}
+                        editable={this.state.TextInputDisableStatus}
+                    />
+                </View>
+
+                <View style={{ alignSelf: "center", flexDirection: "row", }}>
+                    <TouchableOpacity style={styles.btns} onPress={this.onPressButtonDisabled}>
+                        <Text style={{ color: "lightgray", marginLeft: "5%" }}>Salvar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btns} onPress={this.onPressButtonEnabled}>
+                        <Text style={{ color: "lightgray", marginLeft: "5%" }}>Editar</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View >
         )
     }
 

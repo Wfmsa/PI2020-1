@@ -71,38 +71,6 @@ export default class MapScreen extends React.Component {
             }}
             rotateEnabled={false}
           />
-
-          <ScrollView style={{ flex: 1 }}>
-            <Text style={{ alignSelf: "center", fontSize: 20, fontWeight: "bold" }}>Selecione uma rota</Text>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 3</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 4</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 5</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 6</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rotas}>
-              <Ionicons name="md-pin" size={25} style={styles.iconRotas} />
-              <Text style={styles.text}>Rota 7</Text>
-            </TouchableOpacity>
-          </ScrollView>
           <View style={styles.mapDrawerOverlay} />
           <View style={styles.mapDrawerOverlayRight} />
         </SafeAreaView>
@@ -135,7 +103,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: "80%",
+    height: Dimensions.get("window").height,
   },
   mapView: {
     flex: 1,

@@ -53,12 +53,8 @@ export default class RightDrawerTab extends Component {
                             <Ionicons name="md-close" size={40} color="red" />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: "row" }}>
-                        <Text style={styles.text}>Confirme sua presença:</Text>
-                        <TouchableOpacity style={{ marginLeft: "60%" }}>
-                            <Ionicons name="md-refresh" size={30} color="lightgray" onPress={() => this.fetchData()} />
-                        </TouchableOpacity>
-                    </View>
+
+                    <Text style={styles.text}>Confirmados - </Text>
                     <FlatList
                         data={this.state.confirmados}
                         renderItem={({ item }) =>

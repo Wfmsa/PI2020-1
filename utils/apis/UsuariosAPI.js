@@ -30,3 +30,14 @@ export const passageiros = (response) => {
             throw { message: message, error }
         })
 }
+
+export const updatePassageiro = (dados) => {
+    return axios.put(`/update/statusPassageiro/?id=${dados.id}`, dados, config)
+        .then(res => res.data)
+        .catch(error => {
+            const message = 'Falha ao atualizar status';
+            console.log(error)
+            throw { message: message, error }
+        })
+        
+}

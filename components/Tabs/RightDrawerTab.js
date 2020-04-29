@@ -31,6 +31,29 @@ export default class RightDrawerTab extends Component {
         this.setState({ aguardando: this.state.info.filter(item => item.status == 0) })
     }
 
+
+    statusConfirmado(){
+        const dados = {
+            "id": this.state.data.id,
+            "status": 1
+        }
+        UsuarioApi.updatePassageiro(dados)
+        this.setState({data: {status:1}})
+        this.fetchData();
+    }
+
+    statusNegado(){
+        const dados = {
+            "id": this.state.data.id,
+            "status": 2
+        }
+        UsuarioApi.updatePassageiro(dados)
+        this.setState({data: {status:2}})
+        this.fetchData();
+    }
+
+
+
     componentDidMount() {
         this.fetchData();
     }
@@ -47,10 +70,10 @@ export default class RightDrawerTab extends Component {
                     </View>
                     <View style={{ height: 80, justifyContent: "center", flexDirection: "row", paddingTop: 20 }}>
                         <TouchableOpacity style={{ marginRight: "30%" }}>
-                            <Ionicons name="md-checkmark" size={40} color="green" />
+                            <Ionicons name="md-checkmark" size={40} color="green" onPress={() => this.statusConfirmado()} />
                         </TouchableOpacity>
                         <TouchableOpacity >
-                            <Ionicons name="md-close" size={40} color="red" />
+                            <Ionicons name="md-close" size={40} color="red" onPress={() => this.statusNegado()} />
                         </TouchableOpacity>
                     </View>
 

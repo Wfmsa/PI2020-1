@@ -50,5 +50,23 @@ export const updateDadosPassageiro = (dados) => {
             console.log(error)
             throw { message: message, error }
         })
-        
-}
+    }
+        export const insertPassageiro = (dados) => {
+            return axios.post("/cadastro/passageiro",dados,config)
+            .then(res=>res.data)
+            .catch(error=>{
+                const message ='Falha no cadastro de usuario';
+                console.log(error)
+                throw { message: message, error }
+            })
+            }
+                    
+            export const insertMotorista = (dados) => {
+                return axios.post("/cadastro/motorista",dados,config)
+                .then(res=>res.data)
+                .catch(error=>{
+                    const message ='Falha no cadastro de usuario';
+                    console.log(error)
+                    throw { message: message, error }
+                })
+            }        

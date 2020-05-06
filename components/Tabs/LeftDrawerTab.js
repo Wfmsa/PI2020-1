@@ -47,7 +47,7 @@ export default class LeftDrawerTan extends Component {
                     <View style={{ height: 150, backgroundColor: '#252525', alignItems: "center", justifyContent: "center" }}>
                         <TouchableOpacity onPress={this.navigateToScreen('Profile')}>
                             <Ionicons name="md-contact" size={80} color="lightgray" />
-                            <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>{this.state.data.Nome}</Text>
+                            <Text style={{ color: "lightgray", fontWeight: "bold", alignSelf: "center" }}>{this.state.data.nome}</Text>
                         </TouchableOpacity>
 
                     </View>

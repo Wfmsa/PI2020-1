@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import {
   StyleSheet,
   View,
@@ -10,6 +10,8 @@ import {
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
 import * as UsuarioRepositorio from "../repositorios/UsuarioRepositorio";
+import io from 'socket.io-client';
+import { RegionsMock } from '../mock/RegionsMock';
 
 
 export default class MapScreen extends React.Component {
@@ -24,8 +26,24 @@ export default class MapScreen extends React.Component {
         latitudeDelta: 0.0143,
         longitudeDelta: 0.0134,
       },
+      regionPassageiro: {
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.0143,
+        longitudeDelta: 0.0134,
+      },
       data: '',
+      socket: io('https://:8081')
     }
+
+    this.state.socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
+
+  
+    this.state.socket.on('chat.message', (data) => {
+      if(this.state.data.tipo === 1) 
+        this.setState({ regionPassageiro: data.region })
+    })
+    
   }
 
   async fetchData() {
@@ -40,8 +58,8 @@ export default class MapScreen extends React.Component {
           region: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0,
+            latitudeDelta: 0.0143,
+            longitudeDelta: 0.0134,
           }
         });
       },
@@ -50,11 +68,27 @@ export default class MapScreen extends React.Component {
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     )
+
+    const myId = Date.now();
+
+    if(this.state.data.tipo === 0) {
+      this.state.socket.emit('chat.message', {
+        id: myId,
+        tipoUser: this.state.data.tipo,
+        region: this.state.region
+      })
+    } 
   }
 
   componentDidMount() {
     this.map()
     this.fetchData()
+  }
+
+  updateRegion = (region) => {
+
+    this.setState({ region, regionPassageiro: region });
+    
   }
 
   onRegionChange(region) {
@@ -64,8 +98,7 @@ export default class MapScreen extends React.Component {
   }
 
   render() {
-
-
+    const { data, region, regionPassageiro } = this.state;
     if (this.state.region.latitude) {
       if (this.state.data.tipo !== 0) {
         return (
@@ -73,14 +106,21 @@ export default class MapScreen extends React.Component {
             <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
             <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
             <MapView
+              fitToElements={0}
               style={styles.map}
-              region={this.state.region}
-              showsUserLocation={true}
+              region={ data && data.tipo === 0 ? region : regionPassageiro}
               onRegionChangeCompletee={region => {
                 this.setState({ region });
               }}
               rotateEnabled={false}
-            />
+            >
+              {regionPassageiro && regionPassageiro.latitude && regionPassageiro.longitude && 
+              <Marker 
+                
+                coordinate={{latitude: regionPassageiro.latitude, longitude: regionPassageiro.longitude}}
+                image={require('../assets/images/minivan.png')}
+              />}
+            </MapView>
             <View style={styles.mapDrawerOverlay} />
             <View style={styles.mapDrawerOverlayRight} />
           </SafeAreaView>
@@ -94,9 +134,14 @@ export default class MapScreen extends React.Component {
             style={styles.mapM}
             region={this.state.region}
             showsUserLocation={true}
-            onRegionChangeCompletee={region => {
-              this.setState({ region });
+            onUserLocationChange={() => {
+              this.map();
+              //console.log(this.state.region);
             }}
+            // onRegionChangeCompletee={region => {
+            //   this.updateRegion(region);
+            //   //this.setState({ region });
+            // }}
             rotateEnabled={false}
           />
           <View style={styles.mapDrawerOverlay} />

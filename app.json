@@ -26,6 +26,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.unibh.pi2020",
+      "versionCode": 1
     }
   }
 }

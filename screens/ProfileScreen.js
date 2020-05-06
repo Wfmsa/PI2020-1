@@ -39,20 +39,36 @@ export default class PassageiroScreen extends React.Component {
         this.fetchData();
     }
 
-    atualizarDados() {
-        const dados = {
-            "id": this.state.data.id,
-            "Nome": this.state.name,
-            "telefone": this.state.tel,
-            "endereco_rua": this.state.end_rua,
-            "endereco_bairro": this.state.end_bairro,
-            "endereco_num": this.state.end_num
+    async atualizarDados() {
+        if (this.state.data.tipo !== 0) {
+            console.log (this.state.data.tipo)
+            console.log ("sou passageiro")
+            const dados = {
+                "id": this.state.data.id,
+                "nome": this.state.name,
+                "telefone": this.state.tel,
+                "endereco_rua": this.state.end_rua,
+                "endereco_bairro": this.state.end_bairro,
+                "endereco_num": this.state.end_num
+            }
+            UsuarioApi.updateDadosPassageiro(dados)
+        } else {
+            console.log (this.state.data.tipo)
+            console.log ("sou motorista")
+            const dados = {
+                "id": this.state.data.id,
+                "nome": this.state.name,
+                "telefone": this.state.tel,
+                "endereco_rua": this.state.end_rua,
+                "endereco_bairro": this.state.end_bairro,
+                "endereco_num": this.state.end_num
+            }
+            UsuarioApi.updateDadosMotorista(dados)
         }
-        UsuarioApi.updateDadosPassageiro(dados)
     }
 
     render() {
-        const nome = this.state.data.Nome
+        console.log(this.state.data)
         if (this.state.data.tipo !== 0) {
             return (
                 <View style={styles.container}>
@@ -77,7 +93,7 @@ export default class PassageiroScreen extends React.Component {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder={nome}
+                        placeholder={this.state.data.nome}
                         editable={this.state.TextInputDisableStatus}
                         onChangeText={(name) => this.setState({ name })}
                     />
@@ -138,29 +154,34 @@ export default class PassageiroScreen extends React.Component {
 
                 <TextInput
                     style={styles.input}
-                    value={this.state.data.nome}
+                    placeholder={this.state.data.nome}
                     editable={this.state.TextInputDisableStatus}
+                    onChangeText={(name) => this.setState({ name })}
                 />
                 <TextInput
                     style={styles.input}
-                    value={this.state.data && (this.state.data.telefone).toString()}
+                    placeholder={this.state.data && (this.state.data.telefone).toString()}
                     editable={this.state.TextInputDisableStatus}
+                    onChangeText={(tel) => this.setState({ tel })}
                 />
                 <TextInput
                     style={styles.input}
-                    value={this.state.data.endereco_rua}
+                    placeholder={this.state.data.endereco_rua}
                     editable={this.state.TextInputDisableStatus}
+                    onChangeText={(end_rua) => this.setState({ end_rua })}
                 />
                 <View style={{ flexDirection: "row" }}>
                     <TextInput
                         style={styles.input1}
-                        value={this.state.data.endereco_bairro}
+                        placeholder={this.state.data.endereco_bairro}
                         editable={this.state.TextInputDisableStatus}
+                        onChangeText={(end_bairro) => this.setState({ end_bairro })}
                     />
                     <TextInput
                         style={styles.input1}
-                        value={this.state.data && (this.state.data.endereco_num).toString()}
+                        placeholder={this.state.data && (this.state.data.endereco_num).toString()}
                         editable={this.state.TextInputDisableStatus}
+                        onChangeText={(end_num) => this.setState({ end_num })}
                     />
                 </View>
 

@@ -42,6 +42,17 @@ export const updatePassageiro = (dados) => {
         
 }
 
+export const updateDadosMotorista = (dados) => {
+    return axios.put(`/update/dadosMotorista/?id=${dados.id}`, dados, config)
+        .then(res => res.data)
+        .catch(error => {
+            const message = 'Falha ao atualizar os dados do Motorista';
+            console.log(error)
+            throw { message: message, error }
+        })
+        
+}
+
 export const updateDadosPassageiro = (dados) => {
     return axios.put(`/update/dadosPassageiro/?id=${dados.id}`, dados, config)
         .then(res => res.data)
@@ -70,3 +81,4 @@ export const updateDadosPassageiro = (dados) => {
                     throw { message: message, error }
                 })
             }        
+

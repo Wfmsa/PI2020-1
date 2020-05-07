@@ -33,7 +33,7 @@ export default class MapScreen extends React.Component {
         longitudeDelta: 0.0134,
       },
       data: '',
-      socket: io('https://:8081')
+      socket: io('http://:8081')
     }
 
     this.state.socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))

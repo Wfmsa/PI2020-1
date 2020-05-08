@@ -22,29 +22,32 @@ export default class HomeScreen extends Component {
         super(props);
         this.state = {
             userInfo: {
-                username:'',
+                nome:'',
                 email: '',
-                password: '',
+                passwd: '',
             },
             accountOption: {
                 checkedRadio: '',
             },
         }
     }
-    async _cadastrar() {
+    async cadastrar() {
+        console.log("Entrou  Função")
         if (this.state.accountOption.checkedRadio === "passageiro") {
+            console.log("Entrou aqui Pass")
             const dados = {
-                'Nome': this.state.data.Nome,
-                'Email': this.state.data.email,
+                'nome': this.state.data.nome,
+                'email': this.state.data.email,
                 'passwd': this.state.data.passwd
             }
             UsuarioApi.insertPassageiro(dados)
             this.fetchData();
         }
         else if (this.state.accountOption.checkedRadio === "motorista") {
+            console.log("Entrou aqui Motorista")
             const dados = {
-                'Nome': this.state.data.Nome,
-                'Email': this.state.data.email,
+                'nome': this.state.data.nome,
+                'email': this.state.data.email,
                 'passwd': this.state.data.passwd
 
             }
@@ -122,7 +125,7 @@ export default class HomeScreen extends Component {
                                 <View style={{ marginTop: "10%" }}>
                                     <TouchableOpacity
                                         style={styles.btn}
-                                        onPress={this._cadastrar}>
+                                        onPress={()=> this.cadastrar()}>   
                                         <Text style={{ color: "lightgray" }}>Cadastrar</Text>
                                     </TouchableOpacity>
                                     <View style={{ flexDirection: "row", justifyContent: "center", paddingTop: "1%" }}>

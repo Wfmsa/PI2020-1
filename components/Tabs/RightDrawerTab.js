@@ -117,8 +117,10 @@ export default class RightDrawerTab extends Component {
                                         position: 'absolute',
                                         overflow: "hidden"
                                     }} />
-                                    <Text style={styles.textA}>{item.nome + " - " + item.data_status}</Text>
-
+                                    <View style={{ alignSelf: 'center'}}>
+                                        <Text style={styles.textA}>{item.nome}</Text>
+                                        <Text style={styles.textData}>{item.data_status}</Text>
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                         }
@@ -148,7 +150,10 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.nome}</Text>
+                                <View style={{ alignSelf: 'center'}}>
+                                    <Text style={styles.textA}>{item.nome}</Text>
+                                    <Text style={styles.textData}>{item.data_status}</Text>
+                                </View>
                             </View>
                         }
 
@@ -176,7 +181,9 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.nome}</Text>
+                                <View style={{ alignSelf: 'center'}}>
+                                    <Text style={styles.textA}>{item.nome}</Text>
+                                </View>
                             </View>
                         }
                     />
@@ -213,7 +220,10 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.nome}</Text>
+                            <View style={{ alignSelf: 'center'}}>
+                                <Text style={styles.textA}>{item.nome}</Text>
+                                <Text style={styles.textData}>{item.data_status}</Text>
+                            </View>
                         </View>
                     }
 
@@ -242,7 +252,10 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.nome}</Text>
+                            <View style={{ alignSelf: 'center'}}>
+                                <Text style={styles.textA}>{item.nome}</Text>
+                                <Text style={styles.textData}>{item.data_status}</Text>
+                            </View>
                         </View>
                     }
 
@@ -270,7 +283,9 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.nome}</Text>
+                            <View style={{ alignSelf: 'center'}}>
+                                <Text style={styles.textA}>{item.nome}</Text>
+                            </View>
                         </View>
                     }
                 />
@@ -299,9 +314,13 @@ const styles = StyleSheet.create({
     },
     textA: {
         color: "lightgray",
-        paddingTop: 15,
         marginLeft: 30,
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 20,
+    },
+    textData: {
+        color: "lightgray",
+        marginLeft: 30,
+        fontSize: 14
     }
 });

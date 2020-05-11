@@ -3,6 +3,7 @@ import {
     StyleSheet,
     View,
     Text,
+    Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as UsuarioApi from '../../utils/apis/UsuariosAPI';
@@ -17,6 +18,7 @@ export default class RightDrawerTab extends Component {
         ausentes: '',
         aguardando: '',
         data: '',
+        date: '',
     }
     async fetchData() {
         const dado = await UsuarioApi.passageiros()
@@ -29,36 +31,53 @@ export default class RightDrawerTab extends Component {
         this.setState({ confirmados: this.state.info.filter(item => item.status == 1) })
         this.setState({ ausentes: this.state.info.filter(item => item.status == 2) })
         this.setState({ aguardando: this.state.info.filter(item => item.status == 0) })
+
     }
 
+    getDate() {
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
 
-    statusConfirmado(){
+        this.setState({
+            date:
+                date + '/' + month + '/' + year + ' - ' + hours + ':' + min + ':' + sec,
+        });
+    }
+
+    statusConfirmado() {
+        this.getDate();
         const dados = {
             "id": this.state.data.id,
-            "status": 1
+            "status": 1,
+            "data_status": this.state.date,
         }
         UsuarioApi.updatePassageiro(dados)
-        this.setState({data: {status:1}})
+        this.setState({ data: { status: 1 } })
         this.fetchData();
     }
 
-    statusNegado(){
+    statusNegado() {
         const dados = {
             "id": this.state.data.id,
             "status": 2
         }
         UsuarioApi.updatePassageiro(dados)
-        this.setState({data: {status:2}})
+        this.setState({ data: { status: 2 } })
         this.fetchData();
     }
-
-
 
     componentDidMount() {
         this.fetchData();
     }
 
     render() {
+
+        console.log(this.state.date)
+
         if (this.state.data.tipo !== 0) {
             return (
                 <ScrollView style={{ flex: 1, backgroundColor: "#353535" }}>
@@ -82,25 +101,28 @@ export default class RightDrawerTab extends Component {
                         data={this.state.confirmados}
                         renderItem={({ item }) =>
                             <View style={{ flexDirection: "row" }}>
-                                <Ionicons name="md-contact" size={50}
-                                    style={{
-                                        paddingTop: 5,
-                                        marginLeft: 19,
-                                    }}
-                                    color="lightgray" />
-                                <View style={{
-                                    width: 15,
-                                    height: 15,
-                                    borderRadius: 15 / 2,
-                                    borderWidth: 2,
-                                    borderColor: '#303030',
-                                    backgroundColor: "lime",
-                                    marginTop: 35,
-                                    marginLeft: 45,
-                                    position: 'absolute',
-                                    overflow: "hidden"
-                                }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => this.getDate()}>
+                                    <Ionicons name="md-contact" size={50}
+                                        style={{
+                                            paddingTop: 5,
+                                            marginLeft: 19,
+                                        }}
+                                        color="lightgray" />
+                                    <View style={{
+                                        width: 15,
+                                        height: 15,
+                                        borderRadius: 15 / 2,
+                                        borderWidth: 2,
+                                        borderColor: '#303030',
+                                        backgroundColor: "lime",
+                                        marginTop: 35,
+                                        marginLeft: 45,
+                                        position: 'absolute',
+                                        overflow: "hidden"
+                                    }} />
+                                    <Text style={styles.textA}>{item.nome + " - " + item.data_status}</Text>
+
+                                </TouchableOpacity>
                             </View>
                         }
 
@@ -129,7 +151,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         }
 
@@ -157,7 +179,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         }
                     />
@@ -194,7 +216,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
 
@@ -223,7 +245,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
 
@@ -251,7 +273,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
                 />

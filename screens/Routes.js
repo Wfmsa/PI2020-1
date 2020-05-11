@@ -14,7 +14,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import LoginScreen from './LoginScreen';
 import MapScreen from './MapScreen';
 import CadastroScreen from './CadastroScreen';
-import RotasScreen from './RotasScreen';
+import SettingsScreen from './SettingsScreen';
 import ProfileScreen from './ProfileScreen';
 import RightDrawerTab from '../components/Tabs/RightDrawerTab';
 import LeftDrawerTab from '../components/Tabs/LeftDrawerTab';
@@ -39,17 +39,8 @@ const LeftDrawer = createDrawerNavigator(
 
             },
         },
-        Rotas: {
-            screen: RotasScreen,
-            navigationOptions: {
-                drawerLabel: 'Rotas',
-                drawerIcon: ({ focused }) => (
-                    <Ionicons name="md-pin" size={24} color={focused ? 'orange' : 'white'} />
-                ),
-            }
-        },
         Settings: {
-            screen: RotasScreen,
+            screen: SettingsScreen,
             navigationOptions: {
                 drawerLabel: 'Configurações',
                 drawerIcon: ({ focused }) => (

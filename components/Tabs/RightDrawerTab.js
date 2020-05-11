@@ -25,7 +25,7 @@ export default class RightDrawerTab extends Component {
         this.setState({ data: dados[0] })
 
         const id = this.state.data.tipo === 0 ? this.state.data.id : this.state.data.id_motorista;
-        const dado = await UsuarioApi.passageiros({id: id})
+        const dado = await UsuarioApi.passageiros({ id: id })
         this.setState({ info: dado })
 
         this.setState({ confirmados: this.state.info.filter(item => item.status == 1) })
@@ -60,10 +60,12 @@ export default class RightDrawerTab extends Component {
         this.fetchData();
     }
 
-    statusNegado() {
+    async statusNegado() {
+        await this.getDate();
         const dados = {
             "id": this.state.data.id,
-            "status": 2
+            "status": 2,
+            "data_status": this.state.date,
         }
         UsuarioApi.updatePassageiro(dados)
         this.setState({ data: { status: 2 } })
@@ -117,7 +119,7 @@ export default class RightDrawerTab extends Component {
                                         position: 'absolute',
                                         overflow: "hidden"
                                     }} />
-                                    <View style={{ alignSelf: 'center'}}>
+                                    <View style={{ alignSelf: 'center' }}>
                                         <Text style={styles.textA}>{item.nome}</Text>
                                         <Text style={styles.textData}>{item.data_status}</Text>
                                     </View>
@@ -150,7 +152,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <View style={{ alignSelf: 'center'}}>
+                                <View style={{ alignSelf: 'center' }}>
                                     <Text style={styles.textA}>{item.nome}</Text>
                                     <Text style={styles.textData}>{item.data_status}</Text>
                                 </View>
@@ -181,7 +183,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <View style={{ alignSelf: 'center'}}>
+                                <View style={{ alignSelf: 'center' }}>
                                     <Text style={styles.textA}>{item.nome}</Text>
                                 </View>
                             </View>
@@ -220,7 +222,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <View style={{ alignSelf: 'center'}}>
+                            <View style={{ alignSelf: 'center' }}>
                                 <Text style={styles.textA}>{item.nome}</Text>
                                 <Text style={styles.textData}>{item.data_status}</Text>
                             </View>
@@ -252,7 +254,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <View style={{ alignSelf: 'center'}}>
+                            <View style={{ alignSelf: 'center' }}>
                                 <Text style={styles.textA}>{item.nome}</Text>
                                 <Text style={styles.textData}>{item.data_status}</Text>
                             </View>
@@ -283,7 +285,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <View style={{ alignSelf: 'center'}}>
+                            <View style={{ alignSelf: 'center' }}>
                                 <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         </View>

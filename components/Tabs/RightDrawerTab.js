@@ -48,8 +48,8 @@ export default class RightDrawerTab extends Component {
         });
     }
 
-    statusConfirmado() {
-        this.getDate();
+    async statusConfirmado() {
+        await this.getDate();
         const dados = {
             "id": this.state.data.id,
             "status": 1,
@@ -75,9 +75,6 @@ export default class RightDrawerTab extends Component {
     }
 
     render() {
-
-        console.log(this.state.date)
-
         if (this.state.data.tipo !== 0) {
             return (
                 <ScrollView style={{ flex: 1, backgroundColor: "#353535" }}>

@@ -9,6 +9,7 @@ import {
   Text,
   Switch,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
@@ -42,7 +43,7 @@ export default class MapScreen extends React.Component {
         latitudeDelta: 0.0143,
         longitudeDelta: 0.0134,
       },
-      initialRegionPassageiro: null,
+      isSharingLocation: null,
       data: '',
       socket: io('http://192.168.25.7:8086'),
       lastEmition: Date.now(),
@@ -53,8 +54,10 @@ export default class MapScreen extends React.Component {
   
     this.state.socket.on('chat.message', (data) => {
       if(this.state.data.tipo === 1) 
-        if(!this.state.initialRegionPassageiro)
-          this.setState({ initialRegionPassageiro: data.region })
+        if(!this.state.isSharingLocation)
+          this.setState({ isSharingLocation: true })
+        else if (!data.region)
+          this.setState({ isSharingLocation: false })
         this.setState({ positionPassageiro: data.region })
     })
     
@@ -160,10 +163,36 @@ export default class MapScreen extends React.Component {
     }
     UsuarioApi.updateTodosPassageiros(dados);
     this.setState({ toggle: !toggle});
+
+    const myId = Date.now();
+    this.state.socket.emit('chat.message', {
+      id: myId,
+      tipoUser: this.state.data.tipo,
+      region: null
+    })
+  }
+
+  irParaLocalizacaoTransporte = async () => {
+    const { isSharingLocation, positionPassageiro } = this.state;
+
+    if(isSharingLocation) {
+      await this.setState({ positionTransportePassageiro: positionPassageiro })
+      this.setState({ positionTransportePassageiro: null })
+    }
+    else {
+      Alert.alert(
+        "Atenção!",
+        "O seu motorista não está compartilhando a localização!",
+        [
+          { text: "Sim", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   render() {
-    const { toggle, data, region, positionPassageiro, initialRegionPassageiro } = this.state;
+    const { toggle, data, region, positionPassageiro, positionTransportePassageiro } = this.state;
     if (region.latitude) {
       if (data.tipo !== 0) {
         return (
@@ -172,8 +201,10 @@ export default class MapScreen extends React.Component {
             <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
             <MapView
               style={styles.map}
-              initialRegion={ initialRegionPassageiro }
+              initialRegion={ region }
+              region={ positionTransportePassageiro }
               rotateEnabled={false}
+              showsUserLocation={true}
             >
               {positionPassageiro && positionPassageiro.latitude && positionPassageiro.longitude && 
                 <Marker 
@@ -182,6 +213,11 @@ export default class MapScreen extends React.Component {
                 />
               }
             </MapView>
+            <TouchableOpacity style={[styles.toggleBox, styles.localVanBox]} onPress={() => this.irParaLocalizacaoTransporte()}>
+              <Text style={styles.txtlocalVan}>
+                Ir para localização do transporte
+              </Text>
+            </TouchableOpacity>
             <View style={styles.mapDrawerOverlay} />
             <View style={styles.mapDrawerOverlayRight} />
           </SafeAreaView>
@@ -285,18 +321,28 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     width: "68%",
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     paddingRight: 20,
     paddingLeft: 20,
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 50
   },
+  localVanBox: {
+    elevation: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
   switch: {
     transform: [{ scaleX: 1.75 }, { scaleY: 1.75 }]
   },
   txtSwitch: {
     width: '68%',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'rgba(255, 255, 255, 1)',
+    textAlign: 'center',
+  },
+  txtlocalVan: {
     fontSize: 15,
     fontWeight: 'bold',
     color: 'rgba(255, 255, 255, 1)',

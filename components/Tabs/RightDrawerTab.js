@@ -44,7 +44,7 @@ export default class RightDrawerTab extends Component {
 
         this.setState({
             date:
-                date + '/' + month + '/' + year + ' - ' + hours + ':' + min + ':' + sec,
+                hours + ':' + min + ' - ' + date + '/' + month + '/' + year,
         });
     }
 
@@ -100,7 +100,7 @@ export default class RightDrawerTab extends Component {
                         data={this.state.confirmados}
                         renderItem={({ item }) =>
                             <View style={{ flexDirection: "row" }}>
-                                <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => this.getDate()}>
+                                <TouchableOpacity style={{ flexDirection: "row" }} >
                                     <Ionicons name="md-contact" size={50}
                                         style={{
                                             paddingTop: 5,
@@ -134,28 +134,30 @@ export default class RightDrawerTab extends Component {
                         data={this.state.ausentes}
                         renderItem={({ item }) =>
                             <View style={{ flexDirection: "row" }}>
-                                <Ionicons name="md-contact" size={50}
-                                    style={{
-                                        paddingTop: 5,
-                                        marginLeft: 19,
-                                    }}
-                                    color="lightgray" />
-                                <View style={{
-                                    width: 15,
-                                    height: 15,
-                                    borderRadius: 15 / 2,
-                                    borderWidth: 2,
-                                    borderColor: '#303030',
-                                    backgroundColor: "red",
-                                    marginTop: 35,
-                                    marginLeft: 45,
-                                    position: 'absolute',
-                                    overflow: "hidden"
-                                }} />
-                                <View style={{ alignSelf: 'center' }}>
-                                    <Text style={styles.textA}>{item.nome}</Text>
-                                    <Text style={styles.textData}>{item.data_status}</Text>
-                                </View>
+                                <TouchableOpacity style={{ flexDirection: "row" }} >
+                                    <Ionicons name="md-contact" size={50}
+                                        style={{
+                                            paddingTop: 5,
+                                            marginLeft: 19,
+                                        }}
+                                        color="lightgray" />
+                                    <View style={{
+                                        width: 15,
+                                        height: 15,
+                                        borderRadius: 15 / 2,
+                                        borderWidth: 2,
+                                        borderColor: '#303030',
+                                        backgroundColor: "red",
+                                        marginTop: 35,
+                                        marginLeft: 45,
+                                        position: 'absolute',
+                                        overflow: "hidden"
+                                    }} />
+                                    <View style={{ alignSelf: 'center' }}>
+                                        <Text style={styles.textA}>{item.nome}</Text>
+                                        <Text style={styles.textData}>{item.data_status}</Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         }
 
@@ -165,27 +167,29 @@ export default class RightDrawerTab extends Component {
                         data={this.state.aguardando}
                         renderItem={({ item }) =>
                             <View style={{ flexDirection: "row" }}>
-                                <Ionicons name="md-contact" size={50}
-                                    style={{
-                                        paddingTop: 5,
-                                        marginLeft: 19,
-                                    }}
-                                    color="lightgray" />
-                                <View style={{
-                                    width: 15,
-                                    height: 15,
-                                    borderRadius: 15 / 2,
-                                    borderWidth: 2,
-                                    borderColor: '#303030',
-                                    backgroundColor: "orange",
-                                    marginTop: 35,
-                                    marginLeft: 45,
-                                    position: 'absolute',
-                                    overflow: "hidden"
-                                }} />
-                                <View style={{ alignSelf: 'center' }}>
-                                    <Text style={styles.textA}>{item.nome}</Text>
-                                </View>
+                                <TouchableOpacity style={{ flexDirection: "row" }} >
+                                    <Ionicons name="md-contact" size={50}
+                                        style={{
+                                            paddingTop: 5,
+                                            marginLeft: 19,
+                                        }}
+                                        color="lightgray" />
+                                    <View style={{
+                                        width: 15,
+                                        height: 15,
+                                        borderRadius: 15 / 2,
+                                        borderWidth: 2,
+                                        borderColor: '#303030',
+                                        backgroundColor: "orange",
+                                        marginTop: 35,
+                                        marginLeft: 45,
+                                        position: 'absolute',
+                                        overflow: "hidden"
+                                    }} />
+                                    <View style={{ alignSelf: 'center' }}>
+                                        <Text style={styles.textA}>{item.nome}</Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         }
                     />

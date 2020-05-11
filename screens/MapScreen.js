@@ -6,11 +6,15 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
+  Text,
+  Switch,
+  Alert,
 } from 'react-native';
 import MenuButton from '../components/Tabs/MenuButton';
 import MoreButton from '../components/Tabs/MoreButton';
 import * as UsuarioRepositorio from "../repositorios/UsuarioRepositorio";
 import io from 'socket.io-client';
+import * as UsuarioApi from '../utils/apis/UsuariosAPI';
 import { RegionsMock } from '../mock/RegionsMock';
 
 
@@ -26,24 +30,39 @@ export default class MapScreen extends React.Component {
         latitudeDelta: 0.0143,
         longitudeDelta: 0.0134,
       },
-      regionPassageiro: {
+      regionMotorista: {
         latitude: null,
         longitude: null,
         latitudeDelta: 0.0143,
         longitudeDelta: 0.0134,
       },
+      positionPassageiro: {
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.0143,
+        longitudeDelta: 0.0134,
+      },
+      initialRegionPassageiro: null,
       data: '',
-      socket: io('http://:8081')
+      socket: io('http://192.168.25.7:8086'),
+      lastEmition: Date.now(),
+      toggle: false,
     }
 
     this.state.socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
-
   
     this.state.socket.on('chat.message', (data) => {
       if(this.state.data.tipo === 1) 
-        this.setState({ regionPassageiro: data.region })
+        if(!this.state.initialRegionPassageiro)
+          this.setState({ initialRegionPassageiro: data.region })
+        this.setState({ positionPassageiro: data.region })
     })
     
+  }
+
+  componentDidMount() {
+    this.getInitialRegion();
+    this.fetchData()
   }
 
   async fetchData() {
@@ -51,7 +70,7 @@ export default class MapScreen extends React.Component {
     this.setState({ data: dados[0] })
   }
 
-  async map() {
+  getInitialRegion() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -68,26 +87,43 @@ export default class MapScreen extends React.Component {
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     )
-
-    const myId = Date.now();
-
-    if(this.state.data.tipo === 0) {
-      this.state.socket.emit('chat.message', {
-        id: myId,
-        tipoUser: this.state.data.tipo,
-        region: this.state.region
-      })
-    } 
   }
 
-  componentDidMount() {
-    this.map()
-    this.fetchData()
+  async map() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const myId = Date.now();
+
+        const tempoUltimaEmicao = Date.now() - this.state.lastEmition
+        const tempoUltimaEmicaoDate = new Date(tempoUltimaEmicao);
+
+        console.log(tempoUltimaEmicaoDate.getSeconds() >= 10)
+
+        if(tempoUltimaEmicaoDate.getSeconds() >= 10) {
+          this.state.socket.emit('chat.message', {
+            id: myId,
+            tipoUser: this.state.data.tipo,
+            region: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              latitudeDelta: 0.0143,
+              longitudeDelta: 0.0134,
+            }
+          })
+          this.setState({ lastEmition: Date.now() })
+        }
+
+      },
+      (error) => {
+        console.warn(error.code, error.message);
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    )
   }
 
   updateRegion = (region) => {
 
-    this.setState({ region, regionPassageiro: region });
+    this.setState({ region, positionPassageiro: region });
     
   }
 
@@ -97,29 +133,54 @@ export default class MapScreen extends React.Component {
     });
   }
 
+  finalizaTransportAlert = () => {
+    Alert.alert(
+      "Atenção!",
+      "Ao clicar em \"Sim\" todos os status dos seus passageiros serão restaurados",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Sim", onPress: () => {
+          this.finalizarTransporte()
+          console.log("OK Pressed") 
+        }}
+      ],
+      { cancelable: false }
+    );
+  }
+
+  finalizarTransporte = () => {
+    const { toggle } = this.state;
+    const dados = {
+      "id": this.state.data.id,
+      "status": 0
+    }
+    UsuarioApi.updateTodosPassageiros(dados);
+    this.setState({ toggle: !toggle});
+  }
+
   render() {
-    const { data, region, regionPassageiro } = this.state;
-    if (this.state.region.latitude) {
-      if (this.state.data.tipo !== 0) {
+    const { toggle, data, region, positionPassageiro, initialRegionPassageiro } = this.state;
+    if (region.latitude) {
+      if (data.tipo !== 0) {
         return (
           <SafeAreaView style={styles.container}>
             <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
             <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
             <MapView
-              fitToElements={0}
               style={styles.map}
-              region={ data && data.tipo === 0 ? region : regionPassageiro}
-              onRegionChangeCompletee={region => {
-                this.setState({ region });
-              }}
+              initialRegion={ initialRegionPassageiro }
               rotateEnabled={false}
             >
-              {regionPassageiro && regionPassageiro.latitude && regionPassageiro.longitude && 
-              <Marker 
-                
-                coordinate={{latitude: regionPassageiro.latitude, longitude: regionPassageiro.longitude}}
-                image={require('../assets/images/minivan.png')}
-              />}
+              {positionPassageiro && positionPassageiro.latitude && positionPassageiro.longitude && 
+                <Marker 
+                  coordinate={{latitude: positionPassageiro.latitude, longitude: positionPassageiro.longitude}}
+                  image={require('../assets/images/minivan.png')}
+                />
+              }
             </MapView>
             <View style={styles.mapDrawerOverlay} />
             <View style={styles.mapDrawerOverlayRight} />
@@ -132,18 +193,29 @@ export default class MapScreen extends React.Component {
           <MoreButton onPress={() => this.props.navigation.toggleRightDrawer()} />
           <MapView
             style={styles.mapM}
-            region={this.state.region}
+            initialRegion={region}
+            followsUserLocation={true}
             showsUserLocation={true}
             onUserLocationChange={() => {
-              this.map();
-              //console.log(this.state.region);
+              toggle && this.map();
             }}
-            // onRegionChangeCompletee={region => {
-            //   this.updateRegion(region);
-            //   //this.setState({ region });
-            // }}
             rotateEnabled={false}
           />
+          <View style={styles.toggleBox}>
+            <Switch
+              style={styles.switch}
+              trackColor={{ false: "#767577", true: "#767577" }}
+              thumbColor={toggle ? "#00ff1e" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => {
+                toggle ? this.finalizaTransportAlert() :  this.setState({ toggle: !toggle});
+              }}
+              value={toggle}
+            />
+            <Text style={styles.txtSwitch}>
+              {toggle? "Em transporte" : "Transporte finalizado"}
+            </Text>
+          </View>
           <View style={styles.mapDrawerOverlay} />
           <View style={styles.mapDrawerOverlayRight} />
         </SafeAreaView>
@@ -204,4 +276,30 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: 20,
   },
+  toggleBox: {
+    zIndex: 9,
+    position: "absolute",
+    bottom: '6%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    width: "68%",
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 50
+  },
+  switch: {
+    transform: [{ scaleX: 1.75 }, { scaleY: 1.75 }]
+  },
+  txtSwitch: {
+    width: '68%',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'rgba(255, 255, 255, 1)',
+    textAlign: 'center',
+  }
 })

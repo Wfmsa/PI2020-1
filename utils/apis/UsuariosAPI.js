@@ -21,8 +21,8 @@ export const loginPassageiro = (loginP) => {
         })
 }
 
-export const passageiros = (response) => {
-    return axios.get('lista/passageiro', config)
+export const passageiros = (body) => {
+    return axios.post('/lista/passageiro', body, config)
         .then(res => res.data)
         .catch(error => {
             const message = 'Falha ao consultar lista de passageiros';
@@ -40,6 +40,16 @@ export const updatePassageiro = (dados) => {
             throw { message: message, error }
         })
         
+}
+
+export const updateTodosPassageiros = (dados) => {
+    return axios.put('/update/statusTodosPassageiro/', dados, config)
+        .then(res => res.data)
+        .catch(error => {
+            const message = 'Falha ao atualizar status de todos os passageiros';
+            console.log(error)
+            throw { message: message, error }
+        })
 }
 
 export const updateDadosMotorista = (dados) => {

@@ -19,12 +19,12 @@ export default class RightDrawerTab extends Component {
         data: '',
     }
     async fetchData() {
-        const dado = await UsuarioApi.passageiros()
-        this.setState({ info: dado })
-
         const dados = await UsuarioRepositorio.buscarTodos()
         this.setState({ data: dados[0] })
 
+        const id = this.state.data.tipo === 0 ? this.state.data.id : this.state.data.id_motorista;
+        const dado = await UsuarioApi.passageiros({id: id})
+        this.setState({ info: dado })
 
         this.setState({ confirmados: this.state.info.filter(item => item.status == 1) })
         this.setState({ ausentes: this.state.info.filter(item => item.status == 2) })
@@ -100,7 +100,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         }
 
@@ -129,7 +129,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         }
 
@@ -157,7 +157,7 @@ export default class RightDrawerTab extends Component {
                                     position: 'absolute',
                                     overflow: "hidden"
                                 }} />
-                                <Text style={styles.textA}>{item.Nome}</Text>
+                                <Text style={styles.textA}>{item.nome}</Text>
                             </View>
                         }
                     />
@@ -165,7 +165,7 @@ export default class RightDrawerTab extends Component {
             );
         }
         return (
-            <ScrollView style={{ flex: 1, backgroundColor: "#353535" }}>
+            <ScrollView style={{ flex: 1, backgroundColor: "#353535", paddingTop: 10 }}>
                 <View style={{ flexDirection: "row" }}>
                     <Text style={styles.text}>Confirmados - </Text>
                     <TouchableOpacity style={{ marginLeft: "60%" }}>
@@ -194,7 +194,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
 
@@ -223,7 +223,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
 
@@ -251,7 +251,7 @@ export default class RightDrawerTab extends Component {
                                 position: 'absolute',
                                 overflow: "hidden"
                             }} />
-                            <Text style={styles.textA}>{item.Nome}</Text>
+                            <Text style={styles.textA}>{item.nome}</Text>
                         </View>
                     }
                 />

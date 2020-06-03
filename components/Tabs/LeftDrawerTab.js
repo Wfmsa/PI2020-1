@@ -56,10 +56,6 @@ export default class LeftDrawerTan extends Component {
                             <Ionicons name="md-map" size={24} style={styles.icon} color="lightgray" />
                             <Text style={styles.text}>Mapa</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.navigateToScreen('Settings')} style={{ flexDirection: "row" }}>
-                            <Ionicons name="md-settings" size={24} style={styles.icon} color="lightgray" />
-                            <Text style={styles.text}>Configurações</Text>
-                        </TouchableOpacity>
                         <TouchableOpacity style={{ flexDirection: "row" }} onPress={() =>
                             Alert.alert(
                                 'Sair',
@@ -97,14 +93,6 @@ export default class LeftDrawerTan extends Component {
                     <TouchableOpacity onPress={this.navigateToScreen('Map')} style={styles.container}>
                         <Ionicons name="md-map" size={24} style={styles.icon} color="lightgray" />
                         <Text style={styles.text}>Mapa</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.navigateToScreen('Rotas')} style={{ flexDirection: "row" }}>
-                        <Ionicons name="md-pin" size={24} style={styles.icon} color="lightgray" />
-                        <Text style={styles.text}>Rotas</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.navigateToScreen('Settings')} style={{ flexDirection: "row" }}>
-                        <Ionicons name="md-settings" size={24} style={styles.icon} color="lightgray" />
-                        <Text style={styles.text}>Configurações</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: "row" }} onPress={() =>
                         Alert.alert(

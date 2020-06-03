@@ -139,16 +139,16 @@ export default class MapScreen extends React.Component {
   finalizaTransportAlert = () => {
     Alert.alert(
       "Atenção!",
-      "Ao clicar em \"Sim\" todos os status dos seus passageiros serão restaurados",
+      "Ao clicar em \"Continuar\" todos os status dos seus passageiros serão restaurados",
       [
         {
           text: "Cancelar",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "Sim", onPress: () => {
+        { text: "Continuar", onPress: () => {
           this.finalizarTransporte()
-          console.log("OK Pressed") 
+          console.log("Continuar Pressed") 
         }}
       ],
       { cancelable: false }
@@ -184,7 +184,7 @@ export default class MapScreen extends React.Component {
         "Atenção!",
         "O seu motorista não está compartilhando a localização!",
         [
-          { text: "Sim", onPress: () => console.log("OK Pressed") }
+          { text: "Ok", onPress: () => console.log("OK Pressed") }
         ],
         { cancelable: false }
       );
@@ -249,7 +249,7 @@ export default class MapScreen extends React.Component {
               value={toggle}
             />
             <Text style={styles.txtSwitch}>
-              {toggle? "Em transporte" : "Transporte finalizado"}
+              {toggle? "Finalizar transporte" : "Iniciar transporte"}
             </Text>
           </View>
           <View style={styles.mapDrawerOverlay} />
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     transform: [{ scaleX: 1.75 }, { scaleY: 1.75 }]
   },
   txtSwitch: {
-    width: '68%',
+    width: '72%',
     fontSize: 15,
     fontWeight: 'bold',
     color: 'rgba(255, 255, 255, 1)',

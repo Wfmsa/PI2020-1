@@ -12,20 +12,16 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RadioButton } from 'react-native-paper';
-
-const userInfo = { username: '', password: "" }
+import * as UsuarioApi from '../utils/apis/UsuariosAPI';
 
 export default class HomeScreen extends Component {
-
 
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {
-                nome:'',
-                email: '',
-                passwd: '',
-            },
+            nome:'',
+            passwd: '',
+            email: '',
             accountOption: {
                 checkedRadio: '',
             },
@@ -33,26 +29,25 @@ export default class HomeScreen extends Component {
     }
     async cadastrar() {
         console.log("Entrou  Função")
+        const { nome, passwd, email } = this.state;
         if (this.state.accountOption.checkedRadio === "passageiro") {
             console.log("Entrou aqui Pass")
             const dados = {
-                'nome': this.state.data.nome,
-                'email': this.state.data.email,
-                'passwd': this.state.data.passwd
-            }
-            UsuarioApi.insertPassageiro(dados)
-            this.fetchData();
+                "nome": nome,
+                "passwd": passwd,
+                "email": email
+            };
+            await UsuarioApi.insertPassageiro(dados)
+            this.props.navigation.navigate('Login')
         }
         else if (this.state.accountOption.checkedRadio === "motorista") {
-            console.log("Entrou aqui Motorista")
             const dados = {
-                'nome': this.state.data.nome,
-                'email': this.state.data.email,
-                'passwd': this.state.data.passwd
-
-            }
-            UsuarioApi.insertMotorista(dados)
-            this.fetchData();
+                "nome": nome,
+                "passwd": passwd,
+                "email": email
+            };
+            await UsuarioApi.insertMotorista(dados)
+            this.props.navigation.navigate('Login')
         }
         else {
             Alert.alert("Cadastro", "Escolha o tipo conta!")
@@ -76,7 +71,7 @@ export default class HomeScreen extends Component {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Digite seu usuario."
-                                    onChangeText={(username) => this.setState({ username })}
+                                    onChangeText={(nome) => this.setState({ nome })}
                                     value={this.state.username}
                                     autoCapitalize="none"
                                 />
@@ -93,7 +88,7 @@ export default class HomeScreen extends Component {
                                     style={styles.input}
                                     placeholder="Digite sua senha"
                                     secureTextEntry
-                                    onChangeText={(password) => this.setState({ password })}
+                                    onChangeText={(passwd) => this.setState({ passwd })}
                                     value={this.state.passwd}
                                 />
 
@@ -231,6 +226,7 @@ export default class HomeScreen extends Component {
             justifyContent: "center",
             marginLeft: "5%",
             paddingLeft: 10,
+            color: 'white'
         },
         text: {
             paddingTop: 10,

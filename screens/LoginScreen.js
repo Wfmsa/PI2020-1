@@ -37,36 +37,19 @@ export default class HomeScreen extends React.Component {
   render() {
 
     return (
-      <ScrollView style={styles.container} >
+      <View style={styles.container} >
         <View style={styles.welcomeContainer}>
           <Image
             source={require('../assets/images/van.png')}
             style={styles.welcomeImage}
           />
-          <Text style={{ alignItems: "center", color: "lightgray", paddingTop: "10%", fontWeight: "bold" }}>Login com:</Text>
-          <View style={styles.viewBotoesLogin}>
-            <TouchableOpacity
-              style={styles.iconM}
-              activeOpacity={0.5}
-            >
-              <Ionicons name="logo-facebook" color="blue" size={30} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.iconP}
-              activeOpacity={0.5}
-              onPress={() => { this.props.navigation.navigate('Map') }}>
-              <Ionicons name="logo-google" color="orange" size={30} />
-            </TouchableOpacity>
-          </View>
-          <Text style={{ alignItems: "center", color: "lightgray", paddingTop: "12%", fontWeight: "bold" }}>Ou:</Text>
         </View>
 
         <KeyboardAvoidingView style={{ marginBottom: "30%", }}>
-          <Text style={styles.text}>E-Mail:</Text>
+          <Text style={styles.text}>Usuário:</Text>
           <TextInput
             style={styles.input}
-            placeholder="Digite seu e-mail."
+            placeholder="Digite seu nome de usuário."
             onChangeText={(nome) => this.setState({ nome })}
             value={this.state.nome}
             autoCapitalize="none"
@@ -140,7 +123,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
         </KeyboardAvoidingView >
-      </ScrollView>
+      </View>
     );
   }
 
@@ -156,7 +139,7 @@ export default class HomeScreen extends React.Component {
         this.props.navigation.navigate('Map');
       } else {
         await AsyncStorage.setItem('isLoggedIn', '1');
-        Alert.alert("Login", "Email ou senha incorreta!")
+        Alert.alert("Login", "Email, senha ou tipo de conta incorreto!")
       }
 
     } else if (this.state.accountOption.checkedRadio === "passageiro") {
@@ -186,6 +169,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#353535',
+    justifyContent: 'center'
   },
   contentContainer: {
     height: '100%',

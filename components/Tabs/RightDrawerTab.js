@@ -40,7 +40,6 @@ export default class RightDrawerTab extends Component {
         var year = new Date().getFullYear(); //Current Year
         var hours = new Date().getHours(); //Current Hours
         var min = new Date().getMinutes(); //Current Minutes
-        var sec = new Date().getSeconds(); //Current Seconds
 
         this.setState({
             date:

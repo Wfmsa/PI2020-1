@@ -14,12 +14,7 @@ export default class HomeScreen extends Component {
             <View style={styles.container}>
                 <SafeAreaView style={styles.container}>
                     <MenuButton onPress={() => this.props.navigation.toggleLeftDrawer()} />
-                    <Ionicons
-                        name="md-add"
-                        color="black"
-                        size={35}
-                        style={styles.addIcon}
-                    />                   
+
                 </SafeAreaView>
             </View>
         );
